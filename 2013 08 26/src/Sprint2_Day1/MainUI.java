@@ -44,7 +44,7 @@ import javax.swing.table.TableModel;
     
     
 public class MainUI extends JFrame {   
-  
+  //Otis made a change
     // Sets the repository of all stored objects    
     private RetailSystem db = new RetailSystem();    
     private Check check = new Check();   
