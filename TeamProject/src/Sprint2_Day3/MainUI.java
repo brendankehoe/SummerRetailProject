@@ -526,7 +526,7 @@ public class MainUI extends JFrame {
 		if (orderInvoiceSelection.equals("Sales")){
 			for (int j=0;j<chartDays;j=j+7){           	
 
-				//Update date by one day
+				//Update date by seven days
 				c1.setTime(date);
 				c1.add(Calendar.DATE, 7);
 				date=c1.getTime();
