@@ -470,13 +470,18 @@ public class MainUI extends JFrame {
 		StringBuffer sb = new StringBuffer();
 		for(int i=0; i<selctedProductText.length(); i++)
 		{
-			if(Character.isDigit(selctedProductText.charAt(i)))
+			if(Character.isDigit(selctedProductText.charAt(i))){
 				sb.append(selctedProductText.charAt(i));
+			}
+			else{
+				break;
+			}
 		}
+		System.out.println(sb.toString());
 		
 		if (sb.length()!=0){ //then a product must be selected
 			//Find the product corresponding to the selected ID in the item
-			Product product = db.getProducts().get(Integer.parseInt(sb.toString()));
+			Product product = db.getProducts().get(Integer.parseInt(sb.toString())-1);
 			chartTitle=product.getName()+ " - Weekly Sales";
 		}
 		else if (productSelectionComboBox.getSelectedIndex()==0){
@@ -498,8 +503,12 @@ public class MainUI extends JFrame {
 		StringBuffer sb = new StringBuffer();
 		for(int i=0; i<selctedProductText.length(); i++)
 		{
-			if(Character.isDigit(selctedProductText.charAt(i)))
+			if(Character.isDigit(selctedProductText.charAt(i))){
 				sb.append(selctedProductText.charAt(i));
+			}
+			else{
+				break;
+			}
 		}
 
 		//Initiate calender (necessary for incrementing date)
@@ -521,7 +530,7 @@ public class MainUI extends JFrame {
 		};  	
 		dataTableModel.addColumn("Date");
 		dataTableModel.addColumn("Weekly Sales (€)");
-		Vector<String> singleDate = new Vector<String>();
+		Vector<String> singleRow = new Vector<String>();
 
 		if (orderInvoiceSelection.equals("Sales")){
 			for (int j=0;j<chartDays;j=j+7){           	
@@ -542,7 +551,7 @@ public class MainUI extends JFrame {
 						//If sb has a length (is a number) then the selection must be a product
 						if (sb.length()!=0){
 							//Find the product corresponding to the selected ID in the item
-							Product product = db.getProducts().get(Integer.parseInt(sb.toString()));
+							Product product = db.getProducts().get(Integer.parseInt(sb.toString())-1);
 							//Loop through products. Only add the total sales if the product is the same as the selected product
 							for (Product p : i.getProducts()){    					
 								if (p.getSku()==product.getSku()){
@@ -557,10 +566,10 @@ public class MainUI extends JFrame {
 						}					
 					}
 				}
-				singleDate.add(sdf.format(date));
-				singleDate.add(Double.toString(totalSales));
-				dataTableModel.addRow(singleDate);
-				singleDate = new Vector<String>();
+				singleRow.add(sdf.format(date));
+				singleRow.add(Double.toString(totalSales));
+				dataTableModel.addRow(singleRow);
+				singleRow = new Vector<String>();
 			}
 
 
@@ -569,11 +578,46 @@ public class MainUI extends JFrame {
 			//Code
 		}
 		else if (orderInvoiceSelection.equals("Stock Level")){
-			//Code
+			for (int j=0;j<chartDays;j=j+7){           	
+
+				//Update date by seven days
+				c1.setTime(date);
+				c1.add(Calendar.DATE, 7);
+				date=c1.getTime();
+
+				totalSales=0; //reset totalSales
+
+				//Loop through the invoices. Add the total values of the invoices with the same date as the date in loop
+				for (Invoice i : db.getInvoices()){
+					c2.setTime(i.getDate());
+					if (c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR) &&
+							c1.get(Calendar.WEEK_OF_YEAR) == c2.get(Calendar.WEEK_OF_YEAR)){
+
+						//If sb has a length (is a number) then the selection must be a product
+						if (sb.length()!=0){
+							//Find the product corresponding to the selected ID in the item
+							Product product = db.getProducts().get(Integer.parseInt(sb.toString())-1);
+							//Loop through products. Only add the total sales if the product is the same as the selected product
+							for (Product p : i.getProducts()){    					
+								if (p.getSku()==product.getSku()){
+									totalSales=totalSales+i.calculateTotalRetailValue();
+								}
+							}
+						}
+
+						//Else it must be another, non product, selection 
+						else if (productSelectionComboBox.getSelectedIndex()==0){
+							totalSales=totalSales+i.calculateTotalRetailValue();
+						}					
+					}
+				}
+				singleRow.add(sdf.format(date));
+				singleRow.add(Double.toString(totalSales));
+				dataTableModel.addRow(singleRow);
+				singleRow = new Vector<String>();
+			}
 		}
 	}
-
-	
 
 	public XYDataset dataFromTable(){
 
