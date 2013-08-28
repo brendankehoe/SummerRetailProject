@@ -28,12 +28,16 @@ public class ProductForm {
 
 	}
 	
-	public boolean isDelivered() {
-		return isDelivered;
-	}
+	public double calculateWholesaleValue(int sku){
+		
+		double value = 0;	
+		for (Product product: products){
+			if ( sku == product.getSku() ){
+				value+=product.getWholesalePrice()*product.getQuantity();				
+			}
+		}	
+		return value;
 
-	public void setDelivered(boolean isDelivered) {
-		this.isDelivered = isDelivered;
 	}
 
 	public double calculateTotalRetailValue(){
@@ -42,6 +46,18 @@ public class ProductForm {
 		for (Product p: products){
 			value+=p.getRetailPrice()*p.getQuantity();
 		}
+		return value;
+
+	}
+	
+	public double calculateRetailValue(int sku){
+		
+		double value = 0;	
+		for (Product product: products){
+			if ( sku == product.getSku() ){
+			value+=product.getWholesalePrice()*product.getQuantity();
+			}
+		}	
 		return value;
 
 	}
@@ -78,6 +94,14 @@ public class ProductForm {
 
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
+	}
+	
+	public boolean isDelivered() {
+		return isDelivered;
+	}
+
+	public void setDelivered(boolean isDelivered) {
+		this.isDelivered = isDelivered;
 	}
 
 }
