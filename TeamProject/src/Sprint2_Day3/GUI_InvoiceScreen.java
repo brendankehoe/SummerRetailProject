@@ -17,7 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
+ 
 public class GUI_InvoiceScreen {
 	
 	private String homeScreenAccess = "home", invoiceScreenAccess = "invoice", invoiceCreateScreenAccess = "invoiceCreate", invoiceEditScreenAccess = "invoiceEdit";

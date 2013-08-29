@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
-
+ 
 public class GUI_CustomerCreateScreen {
 	
 	private String customerScreenAccess = "customer", customerCreateScreenAccess = "customerCreate";

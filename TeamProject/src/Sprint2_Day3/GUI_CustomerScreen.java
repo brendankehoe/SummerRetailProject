@@ -22,7 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
+ 
 public class GUI_CustomerScreen {
 	
 	private String homeScreenAccess = "home", customerScreenAccess = "customer", customerCreateScreenAccess = "customerCreate", customerViewScreenAccess = "customerView";

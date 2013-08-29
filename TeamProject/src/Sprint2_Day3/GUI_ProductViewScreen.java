@@ -53,7 +53,7 @@ public class GUI_ProductViewScreen {
         
         //************Product Details Panel*************************
         //Need to initiate product as it is not defined until inside a loop
-       Product product = new Product();
+        Product product = new Product(0,"",0,0,0, new Supplier(0,"","",""));
         
         //Retrieving the correct customer from the selectedCustomerID from the table. 
         for (Product p : NewUI.db.getProducts()){
@@ -199,35 +199,31 @@ public class GUI_ProductViewScreen {
         final JButton productViewEditButton = new JButton("Edit");  
         productViewEditButton.setActionCommand(productScreenAccess);  
         productViewEditButton.addActionListener(new ActionListener() {  
-            // Create product from fields  
+            // Create product from fields
             public void actionPerformed(ActionEvent e) {
             	for (Product p : NewUI.db.getProducts()){
+            		System.out.println(1);
     				  if (NewUI.selectedProductID == p.getSku()){
-    					  if (NewUI.check.isNotBlank(nameText.getText()) && NewUI.check.isPositiveNumeric(wholesaleText.getText())    
-    		                        && NewUI.check.isPositiveNumeric(retailText.getText())){
+    					  System.out.println(2);
+    					  if (true
+//    						&&	  NewUI.check.isNotBlank(nameText.getText())
+//    						   && NewUI.check.isPositiveNumeric(wholesaleText.getText())    
+//    		                   && NewUI.check.isPositiveNumeric(retailText.getText())
+    		                        ){
+    						  System.out.println(3);
     						  Supplier supplier = NewUI.db.getSuppliers().get(supplierCombo.getSelectedIndex());
     						  p.setSupplier(supplier);
     						  p.setName(nameText.getText());
     						  p.setWholesalePrice(Double.parseDouble(wholesaleText.getText()));
         					  p.setRetailPrice(Double.parseDouble(retailText.getText()));
         					  p.setQuantity(Integer.parseInt(quantityText.getText()));
-//            	    		  for(Invoice invoice : NewUI.db.getInvoices()){
-//                      		  if(NewUI.selectedCustomerID == invoice.getCustomer().getId()){
-//                      			  invoice.getProduct().setSupplier(supplier);
-//                      			  invoice.getProduct().setSupplier(supplier);
-//                      			  invoice.getProduct().setName(wholesaleText.getText());
-//                      			  invoice.getProduct().setWholesalePrice(Double.parseDouble(wholesaleText.getText()));
-//                      			  invoice.getProduct().setRetailPrice(Double.parseDouble(retailText.getText()));
-//                      			  invoice.getProduct().setQuantity(quantityText.getText());
-//                      			  break;
-//                      		  }
-//                      	  }      	   
+   
         					  NewUI.currentActiveScreen=e.getActionCommand();
-        					  
-        					  GUI_CustomerScreen customerScreen = new GUI_CustomerScreen();
-        					  customerScreen.customerScreen(); 
+        					  GUI_ProductScreen productScreen = new GUI_ProductScreen();
+        					  productScreen.productScreen(); 
         					  NewUI.selectedCustomerID=0;
-//        					  customerViewScreenRefresh();
+        				      CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
+        				      cl.show(NewUI.gui, NewUI.currentActiveScreen); 
         					  break;
     					  }
     	    	  

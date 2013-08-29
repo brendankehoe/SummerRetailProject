@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.table.DefaultTableModel;
 
-
+ 
 public class GUI_InvoiceCreateScreen {
 	
 	private String invoiceScreenAccess = "invoice", invoiceCreateScreenAccess = "invoiceCreate";

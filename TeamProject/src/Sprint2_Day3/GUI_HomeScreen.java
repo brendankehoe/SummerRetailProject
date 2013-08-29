@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class GUI_HomeScreen {
-	
+ 	
 	private String homeScreenAccess = "home", productScreenAccess = "product", orderScreenAccess = "order", supplierScreenAccess = "supplier", customerScreenAccess = "customer", invoiceScreenAccess = "invoice",
 			stockControlScreenAccess =  "stockControl";
 	

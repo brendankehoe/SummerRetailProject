@@ -100,7 +100,6 @@ public class MenuBarUI {
         
         JMenuItem userCreate = new JMenuItem("Create User");
         userCreate.setActionCommand(userCreateScreenAccess);
-        System.out.println(1);
         userCreate.addActionListener(new ActionListener(){ 
         	@Override
         	public void actionPerformed(ActionEvent e) {

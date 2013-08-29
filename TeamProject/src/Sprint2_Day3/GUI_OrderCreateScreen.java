@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.table.DefaultTableModel;
 
-
+ 
 public class GUI_OrderCreateScreen {
 	
 	private String orderScreenAccess = "order", orderCreateScreenAccess = "orderCreate";

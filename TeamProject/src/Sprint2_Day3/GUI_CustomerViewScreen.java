@@ -25,7 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-
+ 
 public class GUI_CustomerViewScreen {
 	
 	private String customerScreenAccess = "customer", customerViewScreenAccess = "customerView";
