@@ -32,7 +32,7 @@ public class NewUI {
     orderCreateScreen, orderEditScreen,  
     supplierCreateScreen, 
     customerCreateScreen, customerViewScreen, 
-    invoiceCreateScreen, stockControlScreen, userScreen, userCreateScreen;
+    invoiceCreateScreen, stockControlScreen, userScreen, userCreateScreen, supplierViewScreen;
     public static String currentActiveScreen;
     
     

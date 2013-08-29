@@ -82,7 +82,8 @@ public class GUI_SupplierScreen {
 	            //Get the selected customer ID from when the table is clicked
 	            supplierTable.addMouseListener(new MouseAdapter() {
 	          	  public void mouseClicked(MouseEvent e) {    
-	          		  NewUI.selectedCustomerID = Integer.parseInt(supplierTable.getValueAt(supplierTable.getSelectedRow(),0).toString());
+	          		  NewUI.selectedSupplierID = Integer.parseInt(supplierTable.getValueAt(supplierTable.getSelectedRow(),0).toString());
+	          		  System.out.println( NewUI.selectedSupplierID);
 	          	  }
 	            });
 	            //Get the selected customer ID from when the keyboard is clicked
@@ -92,7 +93,7 @@ public class GUI_SupplierScreen {
 
 	          	  }
 	          	  public void keyReleased(KeyEvent e) {	
-	          		  NewUI.selectedCustomerID = Integer.parseInt(supplierTable.getValueAt(supplierTable.getSelectedRow(),0).toString());
+	          		  NewUI.selectedSupplierID = Integer.parseInt(supplierTable.getValueAt(supplierTable.getSelectedRow(),0).toString());
 	          	  }
 	          	  public void keyTyped(KeyEvent e) {
 
