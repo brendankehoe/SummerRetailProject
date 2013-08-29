@@ -83,8 +83,8 @@ public class NewUI {
     }
 
 
-//	public static void main(String[] args){
-//    	new NewUI();
-//    }
+	public static void main(String[] args){
+    	new NewUI();
+    }
 
 }

@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.table.DefaultTableModel;
 
-
+ 
 public class GUI_InvoiceCreateScreen {
 	
 	private String invoiceScreenAccess = "invoice", invoiceCreateScreenAccess = "invoiceCreate";
@@ -91,7 +91,7 @@ public class GUI_InvoiceCreateScreen {
         createInvoiceCustomerLabel.setLabelFor(createInvoiceCustomerCombo);
 
         // Label & ComboBox to display invoice product
-        JLabel createInvoiceProductLabel = new JLabel("Product:", JLabel.TRAILING); 
+        JLabel createInvoiceProductLabel = new JLabel("Product: ", JLabel.TRAILING); 
         NewUI.listOfInvoiceProductsVector = new Vector<String>(); 
         createInvoiceProductCombo = new JComboBox<String>(NewUI.listOfInvoiceProductsVector); 
         createInvoiceProductLabel.setLabelFor(createInvoiceProductCombo); 

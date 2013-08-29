@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -23,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
-
+ 
 public class GUI_CustomerCreateScreen {
 	
 	private String customerScreenAccess = "customer", customerCreateScreenAccess = "customerCreate";
@@ -62,7 +63,7 @@ public class GUI_CustomerCreateScreen {
         
         
         //Create name label and text field   
-        JLabel customerCreateNameLabel = new JLabel("Name: ");
+        JLabel customerCreateNameLabel = new JLabel("Name:", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -81,7 +82,7 @@ public class GUI_CustomerCreateScreen {
         createCustomerForm.add(customerCreateNameText,constraint);  
     
         //Create phone number label and text field   
-        JLabel customerCreatePhoneLabel = new JLabel("Phone Number: ");
+        JLabel customerCreatePhoneLabel = new JLabel("Phone Number:", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -100,7 +101,7 @@ public class GUI_CustomerCreateScreen {
         createCustomerForm.add(customerCreatePhoneText,constraint);  
     
         //Create address label and text field   
-        JLabel customerCreateRetailLabel = new JLabel("Address: ");  
+        JLabel customerCreateRetailLabel = new JLabel("Address:", JLabel.TRAILING);  
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -119,7 +120,7 @@ public class GUI_CustomerCreateScreen {
         createCustomerForm.add(customerCreateAddressText,constraint);  
           
         //Date of birth label 
-        JLabel customerCreateDOBLabel = new JLabel("Date of Birth: ");
+        JLabel customerCreateDOBLabel = new JLabel("Date of Birth:", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -181,7 +182,10 @@ public class GUI_CustomerCreateScreen {
         
         //Add the create customers form to the bottom JPanel
         botJP.add(new JLabel("Customer Details"), BorderLayout.NORTH);
-        botJP.add(createCustomerForm, BorderLayout.CENTER);
+        JPanel boxPanel = new JPanel();
+        BoxLayout bl = new BoxLayout(boxPanel,BoxLayout.Y_AXIS);
+        boxPanel.add(createCustomerForm);
+        botJP.add(boxPanel, BorderLayout.CENTER);
           
         //Back button  
         JButton customerCreateBackButton = new JButton("Cancel");  

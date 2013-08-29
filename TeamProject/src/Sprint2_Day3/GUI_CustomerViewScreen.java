@@ -25,7 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-
+ 
 public class GUI_CustomerViewScreen {
 	
 	private String customerScreenAccess = "customer", customerViewScreenAccess = "customerView";
@@ -79,7 +79,7 @@ public class GUI_CustomerViewScreen {
         }
 
         //Putting customer details into the text fields
-        JLabel nameLabel = new JLabel("Name:");
+        JLabel nameLabel = new JLabel("Name:", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -98,7 +98,7 @@ public class GUI_CustomerViewScreen {
         constraint.anchor = GridBagConstraints.WEST;
         middleDetailsJP.add(nameText,constraint);
         
-        JLabel addressLabel = new JLabel("Address:");
+        JLabel addressLabel = new JLabel("Address:", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -118,7 +118,7 @@ public class GUI_CustomerViewScreen {
         constraint.anchor = GridBagConstraints.WEST;
         middleDetailsJP.add(addressText,constraint);
         
-        JLabel phoneLabel = new JLabel("Phone number:");
+        JLabel phoneLabel = new JLabel("Phone number:", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -137,7 +137,7 @@ public class GUI_CustomerViewScreen {
         phoneText.setText(customer.getPhoneNumber());
         middleDetailsJP.add(phoneText,constraint);
         
-        JLabel dODLabel = new JLabel("Date of Birth:");  
+        JLabel dODLabel = new JLabel("Date of Birth:", JLabel.TRAILING);  
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
