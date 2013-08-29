@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,23 +49,20 @@ public class GUI_UserCreateScreen {
 	        JPanel createuserForm = new JPanel();   
 	        createuserForm.setLayout(new GridLayout(10,1,3,3));  
 	            
-	        TitledBorder nameBorder = BorderFactory.createTitledBorder("user Details");  
+	        TitledBorder nameBorder = BorderFactory.createTitledBorder("User Details");  
 	        createuserForm.setBorder(nameBorder); // needs to be removed 
 	            
 	        //create JPanel row1 and add components  
 	        //row1 to hold user name label and textfield value  
 	        JPanel row1 = new JPanel(); 
-	        JLabel createuserNameLabel = new JLabel("User Name", JLabel.TRAILING);  
-	        row1.add(createuserNameLabel); 
-	        JLabel creatuserPassword = new JLabel("Password", JLabel.TRAILING);  
-	        row1.add(creatuserPassword); 
+//	       
 	          
 	          
 //	      create JPanel row2 and add components  
 //	        row2 to hold ....... 
 	        JPanel row2 = new JPanel(); 
-	        JLabel userCreateSupplierLabel = new JLabel("Supplier: ");  
-	        row1.add(userCreateSupplierLabel); 
+	       
+	        
        
 	          
 //	        row2.add(userCreateSupplierLabel); 
@@ -84,28 +82,45 @@ public class GUI_UserCreateScreen {
 	        row4.setLayout(new FlowLayout(FlowLayout.CENTER)); 
 	        row2.add(userCreateNameLabel); 
 	        row2.add(userCreateNameText); 
-	        JLabel userCreateWholesaleLabel = new JLabel("Wholesale Price:  €");   
-	        row4.add(userCreateWholesaleLabel); 
-	        final JTextField userCreateWholesaleText = new JTextField(5);  
-	        row4.add(userCreateWholesaleText); 
-	        JLabel userCreateRetailLabel = new JLabel("       Retail Price:  €");   
+	        JLabel userCreatePassordLabel = new JLabel("Password ");   
+	        row4.add(userCreatePassordLabel); 
+	        final JTextField userCreatePassword = new JTextField(10);  
+	        row4.add(userCreatePassword); 
+	        JLabel userCreateConfirmPasswordlabel = new JLabel("Confirm Password");   
 	          
-	        final JTextField userCreateRetailText = new JTextField(5);  
-	         
+	        final JTextField userCreateConfirmPassword = new JTextField(10);  
+	        
+	        final JCheckBox IsAdmincheckBox = new JCheckBox();
+	        IsAdmincheckBox.setText("Administrator");
+	        IsAdmincheckBox.setSelected(false);
+	        final JCheckBox IsActivecheckBox = new JCheckBox();
+	        IsActivecheckBox.setText("Active Account");
+	        IsActivecheckBox.setSelected(false);
+	        
+
+	        
+	        
 	          
 	       JPanel row5 = new JPanel(); 
 	       row5.setLayout(new FlowLayout(FlowLayout.CENTER)); 
-	       row5.add(userCreateRetailLabel); 
-	       row5.add(userCreateRetailText); 
+	       row5.add(userCreateConfirmPasswordlabel); 
+	       row5.add(userCreateConfirmPassword); 
+	       
+	       JPanel row6 = new JPanel();
+	       row6.setLayout(new FlowLayout(FlowLayout.CENTER));
+	       row6.add(IsActivecheckBox);
+	       row6.add(IsAdmincheckBox);
 	   
 	        createuserForm.add(row1); 
 	        createuserForm.add(row2); 
 	        createuserForm.add(row3); 
 	        createuserForm.add(row4); 
 	        createuserForm.add(row5); 
+	        createuserForm.add(row6);
 	          
 	        botJP.add(createuserForm); 
-	              
+	        //check password matches confirm password
+	              // && userCreatePassword.getText().equals(userCreateConfirmPassword.getText())
 	  
 	        //Back button   
 	        JButton backButton = new JButton("Cancel");   
@@ -129,11 +144,10 @@ public class GUI_UserCreateScreen {
 	        userCreateAddButton.setActionCommand(userScreenAccess);   
 	        userCreateAddButton.addActionListener(new ActionListener() { //Create user from fields   
 	            public void actionPerformed(ActionEvent e){   
-	                if (NewUI.check.isNotBlank(userCreateNameText.getText()) && NewUI.check.isPositiveNumeric(userCreateWholesaleText.getText())    
-	                        && NewUI.check.isPositiveNumeric(userCreateRetailText.getText())){   
-	                    NewUI.db.createNewUser(userCreateNameText.getText(), "test", false, false);    
-	                           // Double.parseDouble(userCreateRetailText.getText()),NewUI.db.getSuppliers().get(userCreateSupplierCombo.getSelectedIndex()));   
-	                          
+	                if (NewUI.check.isNotBlank(userCreateNameText.getText()) && NewUI.check.isNotBlank(userCreateNameText.getText())   
+	                        && NewUI.check.isNotBlank(userCreatePassword.getText()) && NewUI.check.confirmPasswordMatch(userCreatePassword.getText(), userCreateConfirmPassword.getText())){   
+	                    NewUI.db.createNewUser(userCreateNameText.getText(), userCreatePassword.getText(),IsAdmincheckBox.isSelected() , IsActivecheckBox.isSelected());    
+	                         
 	                    CardLayout cl = (CardLayout)(NewUI.gui.getLayout());    
 	                    cl.show(NewUI.gui, e.getActionCommand());   
 	                    NewUI.currentActiveScreen=e.getActionCommand();   

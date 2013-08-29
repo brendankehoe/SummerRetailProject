@@ -158,6 +158,18 @@ public class Check {
         return isAUser;  
     }
     
+    public boolean confirmPasswordMatch(String password, String confirmPassword ){
+    	
+    	boolean isTheSame = true;
+    	if(!password.equals(confirmPassword)){
+    		 JOptionPane.showMessageDialog(null, "Incorrect Password / Confirm Password Combination", "Error",JOptionPane.ERROR_MESSAGE); 
+    		 isTheSame=false; 
+    		
+    	}
+		return isTheSame;
+    	
+    }
+    
     public boolean isAProduct(int id, ArrayList<Product> products){  
         
         boolean isAProduct = false;  
