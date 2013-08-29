@@ -85,7 +85,7 @@ public class GUI_OrderCreateScreen {
         NewUI.createOrderSupplierCombo.setPreferredSize(new Dimension(40,40)); 
         createOrderSupplierLabel.setLabelFor(NewUI.createOrderSupplierCombo); 
         // Label & ComboBox to display order products
-        JLabel createOrderProductLabel = new JLabel("Product(s):", JLabel.TRAILING); 
+        JLabel createOrderProductLabel = new JLabel("Product:", JLabel.TRAILING); 
         NewUI.listOfOrderProductsVector = new Vector<String>(); 
         final JComboBox<String> createOrderProductCombo = new JComboBox<String>(NewUI.listOfOrderProductsVector); 
         createOrderProductLabel.setLabelFor(createOrderProductCombo); 

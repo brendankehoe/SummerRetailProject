@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.Vector; 
   
 import javax.swing.BorderFactory; 
+import javax.swing.BoxLayout;
 import javax.swing.JButton; 
 import javax.swing.JComboBox; 
 import javax.swing.JLabel; 
@@ -310,8 +311,10 @@ public class GUI_ProductViewScreen {
         buttonPanel.add(productViewDeleteButton);  
 
         
-         
-        botJP.add(editProductForm, BorderLayout.CENTER); 
+        JPanel boxPanel = new JPanel();
+        BoxLayout bl = new BoxLayout(boxPanel,BoxLayout.Y_AXIS);
+        boxPanel.add(editProductForm);
+        botJP.add(boxPanel, BorderLayout.CENTER); 
          
     
           

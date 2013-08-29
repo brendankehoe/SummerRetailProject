@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener; 
   
 import javax.swing.BorderFactory; 
+import javax.swing.BoxLayout;
 import javax.swing.JButton; 
 import javax.swing.JComboBox; 
 import javax.swing.JLabel; 
@@ -161,7 +162,11 @@ public class GUI_ProductCreateScreen {
         
         //Add the create products form to the bottom JPanel
         botJP.add(new JLabel("Product Details"), BorderLayout.NORTH);
-        botJP.add(createProductForm, BorderLayout.CENTER); 
+        
+        JPanel boxPanel = new JPanel();
+        BoxLayout bl = new BoxLayout(boxPanel,BoxLayout.Y_AXIS);
+        boxPanel.add(createProductForm);
+        botJP.add(boxPanel, BorderLayout.CENTER); 
               
   
         //Back button   
@@ -186,17 +191,20 @@ public class GUI_ProductCreateScreen {
         productCreateAddButton.setActionCommand(productScreenAccess);   
         productCreateAddButton.addActionListener(new ActionListener() { //Create product from fields   
             public void actionPerformed(ActionEvent e){   
-                if (NewUI.check.isNotBlank(productCreateNameText.getText()) && NewUI.check.isPositiveNumeric(productCreateWholesaleText.getText())    
-                        && NewUI.check.isPositiveNumeric(productCreateRetailText.getText())){   
-                    NewUI.db.createProduct(productCreateNameText.getText(), Double.parseDouble(productCreateWholesaleText.getText()),    
-                            Double.parseDouble(productCreateRetailText.getText()),NewUI.db.getSuppliers().get(productCreateSupplierCombo.getSelectedIndex()));   
-                          
+            	if (NewUI.check.isNotBlank(productCreateNameText.getText()) && NewUI.check.isPositiveNumeric(productCreateWholesaleText.getText())    
+                 && NewUI.check.isPositiveNumeric(productCreateRetailText.getText())){
+            		
+            		NewUI.db.createProduct(productCreateNameText.getText(), Double.parseDouble(productCreateWholesaleText.getText()),    
+                                   Double.parseDouble(productCreateRetailText.getText()),NewUI.db.getSuppliers().get(productCreateSupplierCombo.getSelectedIndex()));   
+                           
+                    NewUI.productScreen.removeAll();
+       	            GUI_ProductScreen productScreen = new GUI_ProductScreen();
+       	            productScreen.productScreen();
+                           
                     CardLayout cl = (CardLayout)(NewUI.gui.getLayout());    
                     cl.show(NewUI.gui, e.getActionCommand());   
                     NewUI.currentActiveScreen=e.getActionCommand();   
-//              refresh();   
-                }   
-      
+                 }   
             }   
         });      
         buttonPanel.add(productCreateAddButton); 

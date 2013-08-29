@@ -91,7 +91,7 @@ public class GUI_InvoiceCreateScreen {
         createInvoiceCustomerLabel.setLabelFor(createInvoiceCustomerCombo);
 
         // Label & ComboBox to display invoice product
-        JLabel createInvoiceProductLabel = new JLabel("Product:", JLabel.TRAILING); 
+        JLabel createInvoiceProductLabel = new JLabel("Product: ", JLabel.TRAILING); 
         NewUI.listOfInvoiceProductsVector = new Vector<String>(); 
         createInvoiceProductCombo = new JComboBox<String>(NewUI.listOfInvoiceProductsVector); 
         createInvoiceProductLabel.setLabelFor(createInvoiceProductCombo); 

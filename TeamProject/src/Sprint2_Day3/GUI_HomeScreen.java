@@ -62,25 +62,6 @@ public class GUI_HomeScreen {
 		        });    
 		        pruductsPanel.add(productScreenButton);    
 		      
-		        //create Panel for Orders    
-		        JPanel ordersPanel = new JPanel();    
-		        ordersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));    
-		        JButton orderScreenButton = new JButton("Manage Orders"); 
-		        orderScreenButton.setActionCommand(orderScreenAccess);
-		        orderScreenButton.addActionListener(new ActionListener(){ 
-		            @Override
-		            public void actionPerformed(ActionEvent e) {
-		            	GUI_OrderScreen orderScreen = new GUI_OrderScreen();
-		            	orderScreen.orderScreen(); 
-		            	
-		            	CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
-		                cl.show(NewUI.gui, e.getActionCommand()); 
-		                
-		                NewUI.currentActiveScreen = e.getActionCommand();
-		            } 
-		        });    
-		        ordersPanel.add(orderScreenButton);    
-		      
 		        //create Panel for Customers    
 		        JPanel customersPanel = new JPanel();    
 		        customersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));    
@@ -117,6 +98,25 @@ public class GUI_HomeScreen {
                     }  
                 });         
                 suppliersPanel.add(supplierScreenButton);     
+		        
+                //create Panel for Orders    
+		        JPanel ordersPanel = new JPanel();    
+		        ordersPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));    
+		        JButton orderScreenButton = new JButton("Manage Orders"); 
+		        orderScreenButton.setActionCommand(orderScreenAccess);
+		        orderScreenButton.addActionListener(new ActionListener(){ 
+		            @Override
+		            public void actionPerformed(ActionEvent e) {
+		            	GUI_OrderScreen orderScreen = new GUI_OrderScreen();
+		            	orderScreen.orderScreen(); 
+		            	
+		            	CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
+		                cl.show(NewUI.gui, e.getActionCommand()); 
+		                
+		                NewUI.currentActiveScreen = e.getActionCommand();
+		            } 
+		        });    
+		        ordersPanel.add(orderScreenButton);    
 		      
 		        //create Panel for Invoices    
 		        JPanel invoicesPanel = new JPanel();    
@@ -158,11 +158,13 @@ public class GUI_HomeScreen {
 		      
 		        //add panel to the main panel         
 		        botJP.add(pruductsPanel);    
-		        botJP.add(ordersPanel);    
+		        botJP.add(suppliersPanel); 
 		        botJP.add(customersPanel);    
-		        botJP.add(suppliersPanel);    
-		        botJP.add(invoicesPanel);   
+   	        
 		        botJP.add(stockControlPanel); 
+		        botJP.add(ordersPanel);
+		        botJP.add(invoicesPanel);   
+
 		        
 
 		        
