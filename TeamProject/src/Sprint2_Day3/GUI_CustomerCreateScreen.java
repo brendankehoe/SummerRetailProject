@@ -182,6 +182,7 @@ public class GUI_CustomerCreateScreen {
         
         //Add the create customers form to the bottom JPanel
         botJP.add(new JLabel("Customer Details"), BorderLayout.NORTH);
+        
         JPanel boxPanel = new JPanel();
         BoxLayout bl = new BoxLayout(boxPanel,BoxLayout.Y_AXIS);
         boxPanel.add(createCustomerForm);

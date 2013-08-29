@@ -50,7 +50,8 @@ public class GUI_ProductCreateScreen {
  *  Screen specific code goes here        
  */
           
-        JPanel createProductForm = new JPanel(new GridBagLayout());
+        JPanel createProductForm = new JPanel();
+        createProductForm.setLayout(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
 
             

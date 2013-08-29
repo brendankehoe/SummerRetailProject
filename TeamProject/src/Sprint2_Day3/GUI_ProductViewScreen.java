@@ -53,7 +53,7 @@ public class GUI_ProductViewScreen {
         
         //************Product Details Panel*************************
         //Need to initiate product as it is not defined until inside a loop
-        Product product = new Product(0,"",0,0,0, new Supplier(0,"","",""));
+        Product product = new Product(0,"",0,0.0,0.0, new Supplier(0,"","",""));
         
         //Retrieving the correct customer from the selectedCustomerID from the table. 
         for (Product p : NewUI.db.getProducts()){
@@ -62,24 +62,7 @@ public class GUI_ProductViewScreen {
       	  }
         }
         
-        
-        
-        
-        
-        
-//        int supplierCount = 0;  
-//    
-//        // System.out.println(productsLine); 
-////        Vector<Vector<String>> wholeTable =  NewUI.productsTableModel.getDataVector();  
-//        
-//      
-//        if (NewUI.productsLine != -1) {  
-//            Vector<String> tableLine = wholeTable.get(NewUI.productsLine);  
-//            sku = Integer.parseInt(tableLine.get(0));  
-//        }  
-//        product = NewUI.db.findProduct(sku);  
-    
-        // System.out.println( tableLine.get(0) );  
+ 
         JPanel editProductForm = new JPanel(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
     
@@ -93,23 +76,16 @@ public class GUI_ProductViewScreen {
         editProductForm.add(SupplierLabel,constraint);  
     
 
-        final JComboBox supplierCombo = new JComboBox();  
+        final JComboBox<String> supplierCombo = new JComboBox<String>();  
         // Populate supplier combo box  
         for (Supplier s : NewUI.db.getSuppliers()) {  
             supplierCombo.addItem(s.getName());  
             if (s.getId() == product.getSupplier().getId()) {  
                 supplierCombo.setSelectedItem(s.getName());//.setSelectedIndex(supplierCount);  
             }  
-//            supplierCount++;  
         }  
-    
-            
-//      System.out.println(supplier.getName());  
-    
-        // for (Supplier s : db.getSuppliers()) {  
-        //  
-        //  
-        // }  
+
+
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 1;
@@ -185,7 +161,8 @@ public class GUI_ProductViewScreen {
         editProductForm.add(quantityLabel,constraint);  
     
         final JTextField quantityText = new JTextField();
-        quantityText.setText(Double.toString(product.getQuantity()));
+        quantityText.setText(Integer.toString(product.getQuantity()));
+        quantityText.setEditable(false);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 1;
@@ -195,63 +172,34 @@ public class GUI_ProductViewScreen {
         editProductForm.add(quantityText,constraint);  
     
         
-        // Save button  
-        final JButton productViewEditButton = new JButton("Edit");  
+        // Edit button  
+        JButton productViewEditButton = new JButton("Edit");  
         productViewEditButton.setActionCommand(productScreenAccess);  
         productViewEditButton.addActionListener(new ActionListener() {  
             // Create product from fields
             public void actionPerformed(ActionEvent e) {
             	for (Product p : NewUI.db.getProducts()){
-            		System.out.println(1);
-    				  if (NewUI.selectedProductID == p.getSku()){
-    					  System.out.println(2);
-    					  if (true
-//    						&&	  NewUI.check.isNotBlank(nameText.getText())
-//    						   && NewUI.check.isPositiveNumeric(wholesaleText.getText())    
-//    		                   && NewUI.check.isPositiveNumeric(retailText.getText())
-    		                        ){
-    						  System.out.println(3);
-    						  Supplier supplier = NewUI.db.getSuppliers().get(supplierCombo.getSelectedIndex());
-    						  p.setSupplier(supplier);
-    						  p.setName(nameText.getText());
-    						  p.setWholesalePrice(Double.parseDouble(wholesaleText.getText()));
-        					  p.setRetailPrice(Double.parseDouble(retailText.getText()));
-        					  p.setQuantity(Integer.parseInt(quantityText.getText()));
-   
-        					  NewUI.currentActiveScreen=e.getActionCommand();
-        					  GUI_ProductScreen productScreen = new GUI_ProductScreen();
-        					  productScreen.productScreen(); 
-        					  NewUI.selectedCustomerID=0;
-        				      CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
-        				      cl.show(NewUI.gui, NewUI.currentActiveScreen); 
-        					  break;
-    					  }
-    	    	  
-            	
-            	
-            	
-//                if (NewUI.check.isNotBlank(nameText.getText())  
-//                        && NewUI.check.isPositiveNumeric(wholesaleText.getText())  
-//                        && NewUI.check.isPositiveNumeric(retailText.getText())) {  
-//                	
-//                    Supplier supplier = NewUI.db.getSuppliers().get(supplierCombo.getSelectedIndex());  
-//                    product.setName(nameText.getText());  
-//                    product.setSupplier(supplier);  
-//                    product.setWholesalePrice(Double.parseDouble(wholesaleText  
-//                            .getText()));  
-//                    product.setRetailPrice(Double.parseDouble(retailText  
-//                            .getText()));  
-//                    product.setQuantity( Integer.parseInt( quantityText.getText() ) );  
-//
-//                    NewUI.db.createProduct(nameText.getText(),  
-//                    Double.parseDouble(wholesaleText.getText()),  
-//                    Double.parseDouble(retailText.getText()),  
-//                    NewUI.db.getSuppliers().get(supplierCombo.getSelectedIndex()));  
-//    
-//                    NewUI.currentActiveScreen = e.getActionCommand();  
-////                  refresh();  
-//                }  
-            } }} 
+            		if (NewUI.selectedProductID == p.getSku()){
+            			if (NewUI.check.isNotBlank(nameText.getText()) && NewUI.check.isPositiveNumeric(wholesaleText.getText())    
+    		             && NewUI.check.isPositiveNumeric(retailText.getText())){
+            				System.out.println(3);
+            				Supplier supplier = NewUI.db.getSuppliers().get(supplierCombo.getSelectedIndex());
+            				p.setSupplier(supplier);
+            				p.setName(nameText.getText());
+            				p.setWholesalePrice(Double.parseDouble(wholesaleText.getText()));
+							p.setRetailPrice(Double.parseDouble(retailText.getText()));
+							p.setQuantity(Integer.parseInt(quantityText.getText()));
+						  	NewUI.currentActiveScreen=e.getActionCommand();
+						  	GUI_ProductScreen productScreen = new GUI_ProductScreen();
+						  	productScreen.productScreen(); 
+						  	NewUI.selectedCustomerID=0;
+						  	CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
+						  	cl.show(NewUI.gui, NewUI.currentActiveScreen); 
+							 break;
+            			}
+            		}
+            	}
+            } 
         }); 
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
