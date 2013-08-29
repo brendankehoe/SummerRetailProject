@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.Vector; 
   
 import javax.swing.BorderFactory; 
+import javax.swing.BoxLayout;
 import javax.swing.JButton; 
 import javax.swing.JLabel; 
 import javax.swing.JPanel; 
@@ -169,7 +170,10 @@ public class GUI_SupplierCreateScreen {
               
         //Add the create supplier form to the bottom JPanel
         botJP.add(new JLabel("Supplier Details"), BorderLayout.NORTH);
-        botJP.add(createSupplierForm,BorderLayout.CENTER);  
+        JPanel boxPanel = new JPanel();
+        BoxLayout bl = new BoxLayout(boxPanel,BoxLayout.Y_AXIS);
+        boxPanel.add(createSupplierForm);
+        botJP.add(boxPanel,BorderLayout.CENTER);  
        
       
            
