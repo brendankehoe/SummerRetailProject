@@ -59,14 +59,10 @@ public  class LoginModule extends JFrame {
         loginframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         logInScreen();
         placeComponents(loginframe); 
-//        placeComponents(p); 
         loginframe.setVisible(true); 
         loginframe.setLocationRelativeTo(null); //Centres the window on screen 
-        
-        
-        printUsers();
-//        NewUI.log = p;
-//        NewUI.gui.add(NewUI.log,"log");
+
+
     } 
       
     
@@ -103,18 +99,16 @@ public  class LoginModule extends JFrame {
     	        screen.add(buttonPanel,BorderLayout.SOUTH);
     	        
     	        // Assigns the MainUI gui panel the contents of the screen panel
-    	        
-//    	        NewUI.log = screen;
-//    	        NewUI.gui.add(NewUI.log,"log");
+
     	// FOOTER 
     }
     
-    public void printUsers(){ 
-          
-        for(User user: NewUI.db.getUsers()){ 
-            System.out.println(user.getUserName() + " "  + user.getPassword()); 
-        } 
-    } 
+//    public void printUsers(){ 
+//          
+//        for(User user: NewUI.db.getUsers()){ 
+//            System.out.println(user.getUserName() + " "  + user.getPassword()); 
+//        } 
+//    } 
       
       
     public boolean authenticateUser(){ 
@@ -160,18 +154,15 @@ public  class LoginModule extends JFrame {
            {
                // Code to use when OK is PRESSED.
                    	
-//               loginframe.dispose(); 
+               loginframe.dispose(); 
                NewUI newui = new NewUI();
            }
            else if (selection == JOptionPane.CANCEL_OPTION)
            {
                // Code to use when CANCEL is PRESSED.
-//        	   loginframe.dispose();
+        	   loginframe.dispose();
            }
-           
-           
-           
-            //and go to home screen ?? 
+
         }
         
         return currentUser.isAdmin();

@@ -76,6 +76,46 @@ public class GUI_SupplierCreateScreen {
         constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.WEST;
         createSupplierForm.add(supplierCreateNameText,constraint); 
+        
+        //Creating label  
+        JLabel supplierCreateEmailLabel = new JLabel("Email: ",JLabel.TRAILING);
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.weightx = 0.5;
+        constraint.gridx = 0;
+        constraint.gridy = 1;
+        constraint.insets = new Insets(10, 5, 10, 10);
+        constraint.anchor = GridBagConstraints.EAST;
+        createSupplierForm.add(supplierCreateEmailLabel,constraint);     
+      
+        //Creating editable text field  
+        final JTextField supplierCreateEmailText = new JTextField(10);
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.weightx = 0.5;
+        constraint.gridx = 1;
+        constraint.gridy = 1;
+        constraint.insets = new Insets(10, 5, 10, 10);
+        constraint.anchor = GridBagConstraints.WEST;
+        createSupplierForm.add(supplierCreateEmailText,constraint); 
+        
+        //Creating label  
+        JLabel supplierCreatePhoneLabel = new JLabel("Phone Number: ",JLabel.TRAILING);
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.weightx = 0.5;
+        constraint.gridx = 0;
+        constraint.gridy = 2;
+        constraint.insets = new Insets(10, 5, 10, 10);
+        constraint.anchor = GridBagConstraints.EAST;
+        createSupplierForm.add(supplierCreatePhoneLabel,constraint);     
+      
+        //Creating editable text field  
+        final JTextField supplierCreatePhoneText = new JTextField(10);
+        constraint.fill = GridBagConstraints.HORIZONTAL;
+        constraint.weightx = 0.5;
+        constraint.gridx = 1;
+        constraint.gridy = 2;
+        constraint.insets = new Insets(10, 5, 10, 10);
+        constraint.anchor = GridBagConstraints.WEST;
+        createSupplierForm.add(supplierCreatePhoneText,constraint); 
 
             
         //Create back button and set action listener   
@@ -104,10 +144,13 @@ public class GUI_SupplierCreateScreen {
         //Add Supplier - when button is pressed, check if the text field is not blank, then add supplier  
         addButton.addActionListener(new ActionListener() {   
             public void actionPerformed(ActionEvent e){   
-                if (NewUI.check.isNotBlank(supplierCreateNameText.getText())){   
+                if (NewUI.check.isNotBlank(supplierCreateNameText.getText())
+                		&& NewUI.check.isNotBlank(supplierCreateEmailText.getText())
+                		&& NewUI.check.isNotBlank(supplierCreatePhoneText.getText())){   
       
-                    //Create supplier from 'name' text field  
-                   // NewUI.db.createSupplier(supplierCreateNameText.getText());   
+//                    Create supplier from text fields  
+                    NewUI.db.createSupplier(supplierCreateNameText.getText(),supplierCreateEmailText.getText(),
+                    		supplierCreatePhoneText.getText());   
       
                     //Retrieving the current active window so that the program can refresh() and then switch to the previous screen  
                     NewUI.currentActiveScreen=e.getActionCommand();  

@@ -7,6 +7,10 @@ import java.awt.FlowLayout;
 import java.awt.Font; 
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector; 
   
 import javax.swing.BorderFactory; 
@@ -21,12 +25,10 @@ import javax.swing.table.DefaultTableModel;
   
 public class GUI_SupplierScreen { 
   
-    public String   homeScreenAccess = "home", 
-                    supplierScreenAccess = "supplier" , 
-                    supplierCreateScreenAccess = "supplierCreate"; 
-              
-      
-      
+	public String   homeScreenAccess = "home", 
+			supplierScreenAccess = "supplier" , 
+			supplierCreateScreenAccess = "supplierCreate", supplierViewScreenAccess = "supplierView";    
+
     public void supplierScreen(){ 
         // HEADER 
                 // Create screen panel that is used to replace the gui panel from MainUI.class 
@@ -51,14 +53,17 @@ public class GUI_SupplierScreen {
         /* 
          *  Screen specific code goes here        
          */
-        
-
-
-	          
+         
 	            //create Table for bottom panel. using DefaultTableModel as an easy way to make a table  
-	            DefaultTableModel dtm = new DefaultTableModel();   
-	            dtm.addColumn("Supplier ID");   
-	            dtm.addColumn("Supplier Name");  
+                DefaultTableModel supplierTableModel = new DefaultTableModel(){
+                	  public boolean isCellEditable(int row, int column)
+                  	  {
+                  		  return false;//This causes all cells to be not editable
+                  	  }
+                };   
+                supplierTableModel.addColumn("ID");   
+                supplierTableModel.addColumn("Name");
+                supplierTableModel.addColumn("Email");
 	          
 	            /*  
 	             * Populating the suppliers table - Loop through suppliers ArrayList and all each ID and name to vector  
@@ -66,13 +71,34 @@ public class GUI_SupplierScreen {
 	             */
 	            for (Supplier s : NewUI.db.getSuppliers()){   
 	                Vector<String> singleSupplier = new Vector<String>();   
-	               // singleSupplier.add(Integer.toString(s.getId()));    
+	                singleSupplier.add(Integer.toString(s.getId()));    
 	                singleSupplier.add(s.getName());   
-	                dtm.addRow(singleSupplier);       
+	                singleSupplier.add(s.getEmail()); 
+	                supplierTableModel.addRow(singleSupplier);       
 	            }    
-	            JTable supplierTable = new JTable();   
-	            supplierTable.setEnabled(false);  
-	            supplierTable.setModel(dtm);   
+	            final JTable supplierTable = new JTable();    
+	            supplierTable.setModel(supplierTableModel); 
+	            
+	            //Get the selected customer ID from when the table is clicked
+	            supplierTable.addMouseListener(new MouseAdapter() {
+	          	  public void mouseClicked(MouseEvent e) {    
+	          		  NewUI.selectedCustomerID = Integer.parseInt(supplierTable.getValueAt(supplierTable.getSelectedRow(),0).toString());
+	          	  }
+	            });
+	            //Get the selected customer ID from when the keyboard is clicked
+	            supplierTable.addKeyListener(new KeyListener(){
+	          	  @Override
+	          	  public void keyPressed(KeyEvent e){ 
+
+	          	  }
+	          	  public void keyReleased(KeyEvent e) {	
+	          		  NewUI.selectedCustomerID = Integer.parseInt(supplierTable.getValueAt(supplierTable.getSelectedRow(),0).toString());
+	          	  }
+	          	  public void keyTyped(KeyEvent e) {
+
+	          	  }
+	            });
+	            
 	          
 	            //Create back button and set action listener  
 	            JButton backButton = new JButton("Back"); 
@@ -87,7 +113,22 @@ public class GUI_SupplierScreen {
 	                    cl.show(NewUI.gui, e.getActionCommand());  
 	                }  
 	            });         
-	            buttonPanel.add(backButton);   
+	            buttonPanel.add(backButton);  
+	            
+	            //Create New Supplier button and set action listener   
+	            JButton editButton = new JButton("View Supplier");    
+	            editButton.setActionCommand(supplierViewScreenAccess);    
+	            editButton.addActionListener(new ActionListener(){  
+	                @Override
+	                public void actionPerformed(ActionEvent e) { 
+	                    GUI_SupplierViewScreen supplierViewScreen = new GUI_SupplierViewScreen(); 
+	                    supplierViewScreen.supplierViewScreen(); 
+	                      
+	                    CardLayout cl = (CardLayout)(NewUI.gui.getLayout()); 
+	                    cl.show(NewUI.gui, e.getActionCommand()); 
+	                }  
+	            });            
+	            buttonPanel.add(editButton); 
 	                
 	            //Create New Supplier button and set action listener   
 	            JButton createButton = new JButton("Add New Supplier");    

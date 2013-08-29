@@ -3,6 +3,7 @@ package Sprint2_Day3;
 import java.awt.BorderLayout; 
 import java.awt.CardLayout; 
 import java.awt.Color; 
+import java.awt.Dimension;
 import java.awt.FlowLayout; 
 import java.awt.Font; 
 import java.awt.GridBagConstraints;
@@ -72,8 +73,9 @@ public class GUI_ProductCreateScreen {
         constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.WEST;
         createProductForm.add(createOrderIDDisplayLabel,constraint); 
-          
-          
+        //see what happens
+        createProductForm.setPreferredSize(new Dimension(botJP.getWidth(),1));        
+        createProductForm.setMaximumSize(new Dimension(botJP.getWidth(),1));
       //create JPanel row2 and add components  
         //row2 to hold supplier label and combobox   
         JLabel productCreateSupplierLabel = new JLabel("Supplier:", JLabel.TRAILING);

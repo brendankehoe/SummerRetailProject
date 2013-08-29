@@ -42,7 +42,7 @@ public class NewUI {
     public static ArrayList<Product> orderBasket = new ArrayList<Product>(), invoiceBasket = new ArrayList<Product>();
     // Integer variables used for combo box position indexes   
     public static int createOrderSupplierIndex, createInvoiceCustomerIndex, createInvoiceSupplierIndex, selectedCustomerID, selectedProductID, 
-    selectedSupplierID, selecteduserID;  
+    selectedSupplierID, selecteduserID, selectedUserID;  
 
     
     //Need
