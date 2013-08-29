@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date; 
 import java.util.Random;
-  
-  
+
+import javax.swing.table.DefaultTableModel;
+ 
   
 public class RetailSystem { 
       
@@ -16,21 +17,24 @@ public class RetailSystem {
     private ArrayList <Supplier> suppliers = new ArrayList<Supplier>(); 
     private ArrayList <Invoice> invoices = new ArrayList<Invoice>(); 
     private ArrayList <Customer> customers = new ArrayList<Customer>(); 
+    private DefaultTableModel stockLevel =  new DefaultTableModel();
+    private ArrayList<User> users = new ArrayList<User>(); 
     private int noOfOrders=1; 
     private int noOfProducts=1; 
     private int noOfSuppliers = 1; 
     private int noOfInvoices = 1; 
     private int noOfCustomers = 1; 
+    private int noofUsers = 1;
       
       
     public RetailSystem(){ 
               
         //Create suppliers 
-        createSupplier("Four corners"); 
-        createSupplier("Premier"); 
-        createSupplier("Colmans"); 
-        createSupplier("C & R"); 
-        createSupplier("S & S"); 
+        createSupplier("Four corners","fourCorners@gmail.com","016786245"); 
+        createSupplier("Premier","premier@gmail.com","016786245");  
+        createSupplier("Colmans","orders@colmans.com","016786245");  
+        createSupplier("C & R","candr@gmail.com","016786245");  
+        createSupplier("S & S","ss@bestbeer.com","016786245");  
       
         //Create products 
         createProduct("Macks Sassy Red", 1, 3, suppliers.get(1)); 
@@ -56,12 +60,24 @@ public class RetailSystem {
         createRandomDatabase();
         createRandomDatabase();
         
+        //create some users for testing 
+        //create an Admin user 
+        createNewUser("Fred Flintstone", "rocks123", true, true); 
+        //create an Admin user 
+        createNewUser("1", "1", true, true);
+        //create an ordinary user 
+        createNewUser("Barney Rubble", "rocks321", true,true); 
+        //create an inactive ordinary user 
+        createNewUser("Wilma","123",false,false); 
+        
     } 
-    
 
-    public void createRandomDatabase(){
+
+	public void createRandomDatabase(){
     	
-    	//Initiate calender (necessary for incrementing date) and random generator rg
+    	//******This method creates a random database, which is a randomised, scaled sine wave
+		
+		//Initiate calender (necessary for incrementing date) and random generator rg
         Date date = new Date(); 
     	Calendar c = Calendar.getInstance();
         Random rg = new Random(); //random generator
@@ -202,15 +218,31 @@ public class RetailSystem {
         Product product = new Product(noOfProducts, name, 0, wholesalePrice, retailPrice, supplier);         
         products.add(product); 
         noOfProducts++; 
+        
+        updateSupplierProducts(supplier);
       
     } 
       
-    public void createSupplier(String name){ 
-          
-        Supplier supplier = new Supplier(noOfSuppliers, name); 
-        suppliers.add(supplier); 
-        noOfSuppliers++; 
+    public void createSupplier(String name, String email, String phoneNumber){ 
+
+    	Supplier supplier = new Supplier(noOfSuppliers, name, email, phoneNumber);
+    	updateSupplierProducts(supplier);
+    	suppliers.add(supplier); 
+    	noOfSuppliers++; 
     } 
+    
+    private void updateSupplierProducts(Supplier supplier){
+    	
+    	supplier.getProducts().clear();
+    	ArrayList<Product> tempProducts =  new ArrayList<Product>();
+    	
+    	for (Product p : products){
+    		if (p.getSupplier().getId()==supplier.getId()){
+    			tempProducts.add(p);
+    		}
+    	}
+		supplier.setProducts(tempProducts);
+    }
       
     public void createCustomer(String name, Date dateOfBirth, String address, String phoneNumber){ 
               
@@ -228,6 +260,23 @@ public class RetailSystem {
         } 
         return products.get(0); 
     } 
+    
+    public void createNewUser(String userName,String password,boolean isAdmin,boolean isActive){ 
+        User user = new User(noofUsers,userName, password, isAdmin, isActive); 
+        users.add(user); 
+        noofUsers++;
+          
+    } 
+    
+    public ArrayList<User> getUsers() {
+		return users;
+	}
+
+
+
+	public void setUsers(ArrayList<User> users) {
+		this.users = users;
+	}
       
     public ArrayList<Order> getOrders() { 
         return orders; 
@@ -307,6 +356,15 @@ public class RetailSystem {
   
     public void setNoOfCustomers(int noOfCustomers) { 
         this.noOfCustomers = noOfCustomers; 
-    } 
+    }   
+
+    public DefaultTableModel getStockLevel() {
+		return stockLevel;
+	}
+
+
+	public void setStockLevel(DefaultTableModel stockLevel) {
+		this.stockLevel = stockLevel;
+	}
   
 } 

@@ -20,7 +20,7 @@ public class Order extends ProductForm{
 			System.out.println("Name of product: " + p.getName() + ", product SKU: " + p.getSku() + ", product quantity: " + p.getQuantity());
 			
 		}
-			System.out.println("Supplier: " + supplier.getID());			
+			System.out.println("Supplier: " + supplier.getId());			
 	
 	}
 	

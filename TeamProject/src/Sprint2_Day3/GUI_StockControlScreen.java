@@ -373,7 +373,6 @@ public class GUI_StockControlScreen {
 				}
 				singleRow.add(sdf.format(date));
 				singleRow.add(Double.toString(totalValue));
-				System.out.println(totalValue);
 				dataTableModel.addRow(singleRow);
 
 				singleRow = new Vector<String>();
@@ -465,7 +464,6 @@ public class GUI_StockControlScreen {
 			singleRow.add(sdf.format(date));
 			singleRow.add(Double.toString(totalValue));
 			dataTableModel.addRow(singleRow);
-			System.out.println(totalValue);
 			singleRow = new Vector<String>();
 			
 		}

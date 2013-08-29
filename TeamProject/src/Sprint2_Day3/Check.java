@@ -139,6 +139,43 @@ public class Check {
         return isACustomer; 
     } 
     
+    //Adding isAUser check - sharon 
+    public boolean isAUser(int id, ArrayList<User> users){  
+          
+        boolean isAUser = false;  
+            
+        for (User c : users){  
+            if (c.getUserId()==id){  
+            	isAUser=true;  
+                break;  
+            }  
+        }  
+            
+        if (!isAUser){  
+            JOptionPane.showMessageDialog(null, "Please select a customer", "Error",JOptionPane.ERROR_MESSAGE);  
+        }  
+            
+        return isAUser;  
+    }
+    
+    public boolean isAProduct(int id, ArrayList<Product> products){  
+        
+        boolean isAProduct = false;  
+            
+        for (Product p : products){  
+            if (p.getSku()==id){  
+                isAProduct=true;  
+                break;  
+            }  
+        }  
+            
+        if (!isAProduct){  
+            JOptionPane.showMessageDialog(null, "Please select a product", "Error",JOptionPane.ERROR_MESSAGE);  
+        }  
+            
+        return isAProduct;  
+    } 
+    
     public boolean isSufficientStock(RetailSystem rd, ArrayList<Product> invoiceBasket, String prodName, int qty){
     	boolean isSufficientStock = true;
     	System.out.println("test1");

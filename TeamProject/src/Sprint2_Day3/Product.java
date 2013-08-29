@@ -17,6 +17,10 @@ public class Product {
 		this.retailPrice=retailPrice;	
 	}
 	
+	public Product(){
+		
+	}
+	
 	//For creating duplicates
 	public Product(Product product){
 		this (product.getSku(), product.getName(), product.getQuantity(), product.getWholesalePrice(), product.getRetailPrice(), product.getSupplier());
