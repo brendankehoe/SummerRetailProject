@@ -30,7 +30,7 @@ public class GUI_SupplierCreateScreen {
   
   
     public void supplierCreateScreen(){ 
-// HEADER 
+// HEADER  
         // Create screen panel that is used to replace the gui panel from MainUI.class 
         JPanel screen = new JPanel(new BorderLayout());  
         screen.setLayout(new BorderLayout());  
