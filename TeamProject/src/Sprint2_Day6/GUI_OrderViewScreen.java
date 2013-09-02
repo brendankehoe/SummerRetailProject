@@ -14,12 +14,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 
  
@@ -114,7 +116,7 @@ public class GUI_OrderViewScreen {
         orderViewWestPanel.add(viewOrderAmountDsiplayLabel,constraint);        
         
         // Label & ComboBox to display Order creation date
-        JLabel viewOrderDateCreatedLabel = new JLabel("Date created:", JLabel.TRAILING);
+        JLabel viewOrderDateCreatedLabel = new JLabel("Creation date:", JLabel.TRAILING);
         constraint.gridx = 0;
         constraint.gridy = 0;
         constraint.insets = new Insets(10, 5, 10, 10);
@@ -130,7 +132,7 @@ public class GUI_OrderViewScreen {
         orderViewEastPanel.add(viewOrderDateCreatedDsiplayLabel,constraint);
         
         // Label & ComboBox to display Order delivery date
-        JLabel viewOrderDateDeliveredLabel = new JLabel("Date delivered:", JLabel.TRAILING);
+        JLabel viewOrderDateDeliveredLabel = new JLabel("Delivery date:", JLabel.TRAILING);
         constraint.gridx = 0;
         constraint.gridy = 1;
         constraint.insets = new Insets(10, 5, 10, 10);
@@ -153,7 +155,10 @@ public class GUI_OrderViewScreen {
         constraint.anchor = GridBagConstraints.EAST;
         orderViewEastPanel.add(viewOrderStatusLabel,constraint);  
         
-        JLabel viewOrderStatusDsiplayLabel = new JLabel(order.isDelivered()+"", JLabel.TRAILING);
+        String deliveryStatus;
+        if(order.isDelivered()){deliveryStatus="Delivered";}
+        else{deliveryStatus="Not delivered";}
+        JLabel viewOrderStatusDsiplayLabel = new JLabel(deliveryStatus, JLabel.TRAILING);
         constraint.gridx = 1;
         constraint.gridy = 2;
         constraint.insets = new Insets(10, 5, 10, 10);
@@ -197,11 +202,9 @@ public class GUI_OrderViewScreen {
         orderBasketTable.setEnabled(false); 
         orderBasketTable.setModel(dtm);
         
-        //Lay out the panel. 
-        SpringUtilities.makeCompactGrid(orderViewFormPanel, 
-                2, 2,   //rows, columns 
-                6, 6,   //initX, initY 
-                6, 6);  //xPad, yPad 
+        //Lay out the panel.
+        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+        orderBasketPanel.setBorder(loweredetched);
         orderBasketPanel.add(basketLabel, BorderLayout.NORTH); 
         orderBasketPanel.add(new JScrollPane(orderBasketTable), BorderLayout.CENTER); 
   

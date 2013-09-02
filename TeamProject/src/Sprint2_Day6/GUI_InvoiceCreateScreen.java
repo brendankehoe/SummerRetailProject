@@ -21,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
  
@@ -79,9 +81,8 @@ public class GUI_InvoiceCreateScreen {
             @Override
             public void actionPerformed(ActionEvent e) { 
                 JComboBox cb = (JComboBox) e.getSource(); 
-                NewUI.createInvoiceSupplierIndex = cb.getSelectedIndex(); 
 
-                invoiceCustomer = NewUI.listOfCustomersVector.get(NewUI.createInvoiceSupplierIndex);
+                invoiceCustomer = NewUI.listOfCustomersVector.get(cb.getSelectedIndex());
                 NewUI.listOfInvoiceProductsVector.clear(); 
                 for(Product product : NewUI.db.getProducts()){ 
                 	NewUI.listOfInvoiceProductsVector.add(product.getName()); 
@@ -110,7 +111,7 @@ public class GUI_InvoiceCreateScreen {
         invoiceCreateFormPanel.add(createInvoiceQuantityLabel); 
         invoiceCreateFormPanel.add(createInvoiceQuantityField); 
 
-        JPanel invoiceBsketPanel = new JPanel(new BorderLayout()); 
+        JPanel invoiceBasketPanel = new JPanel(new BorderLayout()); 
         JLabel basketLabel = new JLabel("Product Basket"); 
           
         //create JTable for bottom Panel load test data for gui design  
@@ -140,8 +141,11 @@ public class GUI_InvoiceCreateScreen {
                 4, 2,   //rows, columns 
                 6, 6,   //initX, initY 
                 6, 6);  //xPad, yPad 
-        invoiceBsketPanel.add(basketLabel, BorderLayout.NORTH); 
-        invoiceBsketPanel.add(new JScrollPane(invoiceBasketTable), BorderLayout.CENTER); 
+        
+        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+        invoiceBasketPanel.setBorder(loweredetched);
+        invoiceBasketPanel.add(basketLabel, BorderLayout.NORTH); 
+        invoiceBasketPanel.add(new JScrollPane(invoiceBasketTable), BorderLayout.CENTER); 
 
         JButton invoiceCreateBackButton = new JButton("Cancel"); 
         invoiceCreateBackButton.setToolTipText("Cancels new invoice and returns to Invoice screen"); 
@@ -202,7 +206,7 @@ public class GUI_InvoiceCreateScreen {
         buttonPanel.add(invoiceCreateSubmitButton); 
           
         botJP.add(invoiceCreateFormPanel); 
-        botJP.add(invoiceBsketPanel); 
+        botJP.add(invoiceBasketPanel); 
         
 // FOOTER 
         // Adds the top, bottom and button panels to the screen panel

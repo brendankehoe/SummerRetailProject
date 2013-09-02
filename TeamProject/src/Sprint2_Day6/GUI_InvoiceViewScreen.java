@@ -14,12 +14,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
  
@@ -165,6 +168,8 @@ public class GUI_InvoiceViewScreen {
         invoiceBasketTable.setModel(dtm);
         
         //Lay out the panel. 
+        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+        invoiceBasketPanel.setBorder(loweredetched);
         invoiceBasketPanel.add(basketLabel, BorderLayout.NORTH); 
         invoiceBasketPanel.add(new JScrollPane(invoiceBasketTable), BorderLayout.CENTER); 
   

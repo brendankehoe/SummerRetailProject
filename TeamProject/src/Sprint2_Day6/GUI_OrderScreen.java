@@ -65,8 +65,11 @@ public class GUI_OrderScreen {
              Vector<String> singleOrder = new Vector<String>();  
              singleOrder.add(Integer.toString(order.getId()));  
              singleOrder.add(order.getSupplier().getName());  
-             singleOrder.add(Double.toString(order.calculateTotalWholesaleValue())); 
-             singleOrder.add(Boolean.toString(order.isDelivered()));
+             singleOrder.add(Double.toString(order.calculateTotalWholesaleValue()));
+             String deliveryStatus;
+             if(order.isDelivered()){deliveryStatus="Delivered";}
+             else{deliveryStatus="Not delivered";}
+             singleOrder.add(deliveryStatus);
              dtm.addRow(singleOrder);      
          }   
          final JTable ordersTable = new JTable();  

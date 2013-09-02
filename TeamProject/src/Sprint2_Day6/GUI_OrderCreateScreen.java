@@ -21,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
  
@@ -104,7 +106,7 @@ public class GUI_OrderCreateScreen {
         orderCreateFormPanel.add(createOrderQuantityLabel); 
         orderCreateFormPanel.add(createOrderQuantityField); 
   
-        JPanel orderBsketPanel = new JPanel(new BorderLayout()); 
+        JPanel orderBasketPanel = new JPanel(new BorderLayout()); 
         JLabel basketLabel = new JLabel("Product Basket"); 
           
         //create JTable for bottom Panel load test data for gui design  
@@ -134,8 +136,11 @@ public class GUI_OrderCreateScreen {
                 4, 2,   //rows, columns 
                 6, 6,   //initX, initY 
                 6, 6);  //xPad, yPad 
-        orderBsketPanel.add(basketLabel, BorderLayout.NORTH); 
-        orderBsketPanel.add(new JScrollPane(orderBasketTable), BorderLayout.CENTER); 
+        
+        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+        orderBasketPanel.setBorder(loweredetched);
+        orderBasketPanel.add(basketLabel, BorderLayout.NORTH); 
+        orderBasketPanel.add(new JScrollPane(orderBasketTable), BorderLayout.CENTER); 
   
   
         JButton orderCreateBackButton = new JButton("Cancel"); 
@@ -196,7 +201,7 @@ public class GUI_OrderCreateScreen {
         buttonPanel.add(orderCreateSubmitButton); 
           
         botJP.add(orderCreateFormPanel); 
-        botJP.add(orderBsketPanel); 
+        botJP.add(orderBasketPanel); 
 
         
 // FOOTER 
