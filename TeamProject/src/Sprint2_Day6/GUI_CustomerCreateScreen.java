@@ -1,4 +1,4 @@
-package Sprint2_Day3;
+package Sprint2_Day6;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,21 +29,19 @@ public class GUI_CustomerCreateScreen {
 
 	public void customerCreateScreen(){
 // HEADER
-		// Create screen panel that is used to replace the gui panel from MainUI.class
-		JPanel screen = new JPanel(new BorderLayout()); 
-		screen.setLayout(new BorderLayout()); 
-        screen.setOpaque(true);  //content panes must be opaque 
-        
-		// Creates three panels used for the top portion, bottom portion and button portion of the screen
-        JPanel topJP = new JPanel();  
-        topJP.setBorder(BorderFactory.createLineBorder(Color.RED));  
-        JPanel botJP =  new JPanel(new BorderLayout());  
-        botJP.setBorder(BorderFactory.createLineBorder(Color.blue));  
-        JPanel buttonPanel = new JPanel(new FlowLayout()); 
+        // Create screen panel that is used to replace the gui panel from MainUI.class 
+        JPanel screen = new JPanel(new BorderLayout()); 
+        screen.setOpaque(true);  //content panes must be opaque  
+          
+        // Creates three panels used for the top portion, bottom portion and button portion of the screen 
+        JPanel topJP = new JPanel();     
+        topJP.setBackground(NewUI.topBannerColor);
+        JPanel botJP =  new JPanel(new BorderLayout());      
+        JPanel buttonPanel = new JPanel(new FlowLayout());  
 
-        // Create the title of the screen in the top panel
-        JLabel titlelbl = new JLabel("Add Customer", JLabel.CENTER);  
-        titlelbl.setFont(new Font("Arial",2 , 48));  
+        // Create the title of the screen in the top panel 
+        JLabel titlelbl = new JLabel("Add Customer", JLabel.CENTER);   
+        titlelbl.setFont(NewUI.topBannerFont);   
         topJP.add(titlelbl);
 // HEADER       
 
@@ -53,7 +52,6 @@ public class GUI_CustomerCreateScreen {
         JPanel createCustomerForm = new JPanel();  
         createCustomerForm.setLayout(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
-       
         
         //Create name label and text field   
         JLabel customerCreateNameLabel = new JLabel("Name:", JLabel.TRAILING);
@@ -177,7 +175,6 @@ public class GUI_CustomerCreateScreen {
         botJP.add(new JLabel("Customer Details"), BorderLayout.NORTH);
         
         JPanel boxPanel = new JPanel();
-        BoxLayout bl = new BoxLayout(boxPanel,BoxLayout.Y_AXIS);
         boxPanel.add(createCustomerForm);
         botJP.add(boxPanel, BorderLayout.CENTER);
           
@@ -206,6 +203,7 @@ public class GUI_CustomerCreateScreen {
         /* 
          * Add customer: if all text fields contain text, create customer from text fields 
          */
+        if (NewUI.currentUser.isAdmin()){
         customerCreateAddButton.addActionListener(new ActionListener(){ 
             public void actionPerformed(ActionEvent e){  
                 if (NewUI.check.isNotBlank(customerCreateNameText.getText()) && NewUI.check.isNotBlank(customerCreatePhoneText.getText()) 
@@ -239,7 +237,8 @@ public class GUI_CustomerCreateScreen {
     
                 } 
             } 
-        }); 
+        });  	
+    }
      
         buttonPanel.add(customerCreateAddButton);  
             

@@ -1,4 +1,4 @@
-package Sprint2_Day3;
+package Sprint2_Day6;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -29,14 +29,12 @@ public class GUI_OrderScreen {
 // HEADER
 		// Create screen panel that is used to replace the gui panel from MainUI.class
 		JPanel screen = new JPanel(new BorderLayout()); 
-		screen.setLayout(new BorderLayout()); 
         screen.setOpaque(true);  //content panes must be opaque 
         
 		// Creates three panels used for the top portion, bottom portion and button portion of the screen
         JPanel topJP = new JPanel();  
-        topJP.setBorder(BorderFactory.createLineBorder(Color.RED));  
-        JPanel botJP =  new JPanel(new BorderLayout());  
-        botJP.setBorder(BorderFactory.createLineBorder(Color.blue));  
+        topJP.setBackground(NewUI.topBannerColor);
+        JPanel botJP =  new JPanel(new BorderLayout());    
         JPanel buttonPanel = new JPanel(new FlowLayout()); 
 
         // Create the title of the screen in the top panel
@@ -49,8 +47,7 @@ public class GUI_OrderScreen {
 /*
  *	Screen specific code goes here       
  */
-        
-        NewUI.selectedOrderID = 0;
+        NewUI.selectedOrderID = 0;  
         
       //create JTable for bottom Panel load test data for gui design   
         DefaultTableModel dtm = new DefaultTableModel()
@@ -62,18 +59,20 @@ public class GUI_OrderScreen {
         };  
          dtm.addColumn("Order ID");  
          dtm.addColumn("Supplier");  
-         dtm.addColumn("Total Cost (€)");  
+         dtm.addColumn("Total Cost (€)");
+         dtm.addColumn("Delivery Status");
          for (Order order : NewUI.db.getOrders()){  
              Vector<String> singleOrder = new Vector<String>();  
              singleOrder.add(Integer.toString(order.getId()));  
              singleOrder.add(order.getSupplier().getName());  
              singleOrder.add(Double.toString(order.calculateTotalWholesaleValue())); 
+             singleOrder.add(Boolean.toString(order.isDelivered()));
              dtm.addRow(singleOrder);      
          }   
          final JTable ordersTable = new JTable();  
   
          ordersTable.setModel(dtm);  
-         //Get the selected customer ID from when the table is clicked
+         //Get the selected supplier ID from when the table is clicked
          ordersTable.addMouseListener(new MouseAdapter() {
        	  public void mouseClicked(MouseEvent e) {    
        		  NewUI.selectedOrderID = Integer.parseInt(ordersTable.getValueAt(ordersTable.getSelectedRow(),0).toString());
@@ -97,27 +96,15 @@ public class GUI_OrderScreen {
          });      
          buttonPanel.add(orderBackButton);   
          
-         //Create Edit button and set action listener
+         //Create View button and set action listener
          JButton orderViewButton = new JButton("View Order");  
-         orderViewButton.setActionCommand(orderViewScreenAccess);
-//         viewButton.addActionListener(new ActionListener() { 
-//         	  public void actionPerformed(ActionEvent e){ 
-//         	      //Edit button checks to see if a customer is selected
-//         		  if (NewUI.check.isACustomer(NewUI.selectedCustomerID, NewUI.db.getCustomers())){
-//         			NewUI.currentActiveScreen = e.getActionCommand();
-//         			  
-//         			GUI_CustomerViewScreen customerViewScreen = new GUI_CustomerViewScreen();
-//   				customerViewScreen.customerViewScreen(); 
-//   				
-//         		  }
-//         	  }
-//           });
+         orderViewButton.setActionCommand(orderViewScreenAccess);  
          orderViewButton.addActionListener(new ActionListener() {
         	 public void actionPerformed(ActionEvent e){ 
         		 //Edit button checks to see if a customer is selected
         		 if (NewUI.check.isAOrder(NewUI.selectedOrderID, NewUI.db.getOrders())){
         			 NewUI.currentActiveScreen = e.getActionCommand();
-      			  
+        			 
         			 GUI_OrderViewScreen orderViewScreen = new GUI_OrderViewScreen();
         			 orderViewScreen.orderViewScreen(); 
 				
@@ -128,23 +115,25 @@ public class GUI_OrderScreen {
         });
         buttonPanel.add(orderViewButton);
 
-         JButton orderCreateButton = new JButton("Create Order");
-         orderCreateButton.setActionCommand(orderCreateScreenAccess);   
-         orderCreateButton.addActionListener(new ActionListener(){ 
-             @Override
-             public void actionPerformed(ActionEvent e) {
-             	GUI_OrderCreateScreen orderCreateScreen = new GUI_OrderCreateScreen();
-             	orderCreateScreen.orderCreateScreen(); 
-             	
-             	CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
-                cl.show(NewUI.gui, e.getActionCommand());
-                
-                NewUI.currentActiveScreen = e.getActionCommand();
-             } 
-          });   
-         buttonPanel.add(orderCreateButton);
+        //If current logged-in user is admin, hide create order
+        if (NewUI.currentUser.isAdmin()){
+        	JButton orderCreateButton = new JButton("Create Order");
+        	orderCreateButton.setActionCommand(orderCreateScreenAccess);   
+        	orderCreateButton.addActionListener(new ActionListener(){ 
+        		@Override
+        		public void actionPerformed(ActionEvent e) {
+        			GUI_OrderCreateScreen orderCreateScreen = new GUI_OrderCreateScreen();
+        			orderCreateScreen.orderCreateScreen(); 
+
+        			CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
+        			cl.show(NewUI.gui, e.getActionCommand());
+
+        			NewUI.currentActiveScreen = e.getActionCommand();
+        		} 
+        	});   
+        	buttonPanel.add(orderCreateButton);
+        }
          
-         botJP.setLayout(new BorderLayout());   
          botJP.add(orderslabel, BorderLayout.NORTH);   
          botJP.add(new JScrollPane(ordersTable),BorderLayout.CENTER); 
 

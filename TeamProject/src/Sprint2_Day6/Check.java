@@ -1,4 +1,4 @@
-package Sprint2_Day3;
+package Sprint2_Day6;
 
 import java.text.ParseException; 
 import java.text.SimpleDateFormat; 
@@ -188,9 +188,26 @@ public class Check {
         return isAProduct;  
     } 
     
+    public boolean isASupplier(int id, ArrayList<Supplier> suppliers){  
+        
+    	boolean isASupplier = false;  
+            
+        for (Supplier s : suppliers){  
+            if (s.getId()==id){  
+                isASupplier=true;  
+                break;  
+            }  
+        }  
+            
+        if (!isASupplier){  
+            JOptionPane.showMessageDialog(null, "Please select a supplier", "Error",JOptionPane.ERROR_MESSAGE);  
+        }  
+            
+        return isASupplier;  
+    } 
+    
     public boolean isSufficientStock(RetailSystem rd, ArrayList<Product> invoiceBasket, String prodName, int qty){
     	boolean isSufficientStock = true;
-    	System.out.println("test1");
     	int stockqty=0;
     	for(Product product : rd.getProducts()){ 
     		if(product.getName().equals(prodName)){

@@ -1,4 +1,4 @@
-package Sprint2_Day3;
+package Sprint2_Day6;
  
 import java.awt.BorderLayout; 
 import java.awt.CardLayout; 
@@ -8,10 +8,13 @@ import java.awt.FlowLayout;
 import java.awt.Font; 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout; 
 import java.awt.Insets;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
   
+
+
 import javax.swing.BorderFactory; 
 import javax.swing.BoxLayout;
 import javax.swing.JButton; 
@@ -19,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel; 
 import javax.swing.JPanel; 
 import javax.swing.JTextField; 
+import javax.swing.border.TitledBorder; 
   
 public class GUI_ProductCreateScreen { 
     private String productScreenAccess = "product",  productCreateScreenAccess = "productCreate"; 
@@ -26,20 +30,18 @@ public class GUI_ProductCreateScreen {
     public void productCreateScreen(String screenName){ 
 // HEADER 
         // Create screen panel that is used to replace the gui panel from MainUI.class 
-        JPanel screen = new JPanel(new BorderLayout());  
-        screen.setLayout(new BorderLayout());  
+        JPanel screen = new JPanel(new BorderLayout()); 
         screen.setOpaque(true);  //content panes must be opaque  
           
         // Creates three panels used for the top portion, bottom portion and button portion of the screen 
-        JPanel topJP = new JPanel();   
-        topJP.setBorder(BorderFactory.createLineBorder(Color.RED));   
-        JPanel botJP =  new JPanel(new BorderLayout());   
-        botJP.setBorder(BorderFactory.createLineBorder(Color.blue));   
+        JPanel topJP = new JPanel();     
+        topJP.setBackground(NewUI.topBannerColor);
+        JPanel botJP =  new JPanel(new BorderLayout());      
         JPanel buttonPanel = new JPanel(new FlowLayout());  
-  
+
         // Create the title of the screen in the top panel 
-        JLabel titlelbl = new JLabel(screenName, JLabel.CENTER);   
-        titlelbl.setFont(new Font("Arial",2 , 48));   
+        JLabel titlelbl = new JLabel("Add Product", JLabel.CENTER);   
+        titlelbl.setFont(NewUI.topBannerFont);   
         topJP.add(titlelbl); 
 // HEADER        
   
@@ -54,6 +56,7 @@ public class GUI_ProductCreateScreen {
 
             
         //create JPanel row1 and add components  
+        //row1 to hold sku label and textfield value  
         JLabel createProductIDLabel = new JLabel("SKU:", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
@@ -72,11 +75,8 @@ public class GUI_ProductCreateScreen {
         constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.WEST;
         createProductForm.add(createOrderIDDisplayLabel,constraint); 
-        
-        //see what happens
-//        createProductForm.setPreferredSize(new Dimension(botJP.getWidth(),1));        
-//        createProductForm.setMaximumSize(new Dimension(botJP.getWidth(),1));
 
+      //create JPanel row2 and add components  
         //row2 to hold supplier label and combobox   
         JLabel productCreateSupplierLabel = new JLabel("Supplier:", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
@@ -124,7 +124,7 @@ public class GUI_ProductCreateScreen {
         //row4 to hold wholesalePrice label and wholeSaleTextField & retailprice label and textFields 
 
         
-        JLabel productCreateWholesaleLabel = new JLabel("Wholesale Price (€): ", JLabel.TRAILING);
+        JLabel productCreateWholesaleLabel = new JLabel("Wholesale Price:  €", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -142,7 +142,7 @@ public class GUI_ProductCreateScreen {
         constraint.anchor = GridBagConstraints.WEST;
         createProductForm.add(productCreateWholesaleText,constraint); 
         
-        JLabel productCreateRetailLabel = new JLabel("Retail Price (€): ", JLabel.TRAILING);
+        JLabel productCreateRetailLabel = new JLabel("Retail Price:  €", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -162,12 +162,10 @@ public class GUI_ProductCreateScreen {
    
         
         //Add the create products form to the bottom JPanel
-        botJP.add(new JLabel("Product Details"), BorderLayout.NORTH);
+        botJP.add(new JLabel("Product Details"),BorderLayout.NORTH);
         
         JPanel boxPanel = new JPanel();
-        BoxLayout bl = new BoxLayout(boxPanel,BoxLayout.Y_AXIS);
         boxPanel.add(createProductForm);
-//        boxPanel.add(new JLabel("Test Details"));
         botJP.add(boxPanel, BorderLayout.CENTER); 
               
   
@@ -196,9 +194,11 @@ public class GUI_ProductCreateScreen {
             	if (NewUI.check.isNotBlank(productCreateNameText.getText()) && NewUI.check.isPositiveNumeric(productCreateWholesaleText.getText())    
                  && NewUI.check.isPositiveNumeric(productCreateRetailText.getText())){
             		
+            		Supplier supplier = NewUI.db.getSuppliers().get(productCreateSupplierCombo.getSelectedIndex());
+            		
             		NewUI.db.createProduct(productCreateNameText.getText(), Double.parseDouble(productCreateWholesaleText.getText()),    
-                                   Double.parseDouble(productCreateRetailText.getText()),NewUI.db.getSuppliers().get(productCreateSupplierCombo.getSelectedIndex()));   
-                           
+                                   Double.parseDouble(productCreateRetailText.getText()),supplier);   
+                    NewUI.db.updateSupplierProducts(supplier);   
                     NewUI.productScreen.removeAll();
        	            GUI_ProductScreen productScreen = new GUI_ProductScreen();
        	            productScreen.productScreen();

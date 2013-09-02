@@ -1,4 +1,4 @@
-package Sprint2_Day3;
+package Sprint2_Day6;
 
 import java.awt.BorderLayout; 
 import java.awt.CardLayout; 
@@ -27,25 +27,24 @@ public class GUI_SupplierScreen {
   
 	public String   homeScreenAccess = "home", 
 			supplierScreenAccess = "supplier" , 
-			supplierCreateScreenAccess = "supplierCreate", supplierViewScreenAccess = "supplierView";    
+			supplierCreateScreenAccess = "supplierCreate", supplierViewScreenAccess = "supplierView"; 
+	Check check =  new Check();
 
     public void supplierScreen(){ 
         // HEADER 
                 // Create screen panel that is used to replace the gui panel from MainUI.class 
-                JPanel screen = new JPanel(new BorderLayout());  
-                screen.setLayout(new BorderLayout());  
+                JPanel screen = new JPanel(new BorderLayout()); 
                 screen.setOpaque(true);  //content panes must be opaque  
                   
                 // Creates three panels used for the top portion, bottom portion and button portion of the screen 
-                JPanel topJP = new JPanel();   
-                topJP.setBorder(BorderFactory.createLineBorder(Color.RED));   
-                JPanel botJP =  new JPanel(new BorderLayout());   
-                botJP.setBorder(BorderFactory.createLineBorder(Color.blue));   
+                JPanel topJP = new JPanel();     
+                topJP.setBackground(NewUI.topBannerColor);
+                JPanel botJP =  new JPanel(new BorderLayout());      
                 JPanel buttonPanel = new JPanel(new FlowLayout());  
   
                 // Create the title of the screen in the top panel 
-                JLabel titlelbl = new JLabel("Manage Supplier", JLabel.CENTER);   
-                titlelbl.setFont(new Font("Arial",2 , 48));   
+                JLabel titlelbl = new JLabel("Manage Suppliers", JLabel.CENTER);   
+                titlelbl.setFont(NewUI.topBannerFont);   
                 topJP.add(titlelbl); 
         // HEADER        
   
@@ -77,13 +76,15 @@ public class GUI_SupplierScreen {
 	                supplierTableModel.addRow(singleSupplier);       
 	            }    
 	            final JTable supplierTable = new JTable();    
-	            supplierTable.setModel(supplierTableModel); 
+	            supplierTable.setModel(supplierTableModel);
+	            
+	            //Reset the selected supplier
+	            NewUI.selectedSupplierID=-1;
 	            
 	            //Get the selected customer ID from when the table is clicked
 	            supplierTable.addMouseListener(new MouseAdapter() {
 	          	  public void mouseClicked(MouseEvent e) {    
 	          		  NewUI.selectedSupplierID = Integer.parseInt(supplierTable.getValueAt(supplierTable.getSelectedRow(),0).toString());
-	          		  System.out.println( NewUI.selectedSupplierID);
 	          	  }
 	            });
 	            //Get the selected customer ID from when the keyboard is clicked
@@ -116,35 +117,45 @@ public class GUI_SupplierScreen {
 	            });         
 	            buttonPanel.add(backButton);  
 	            
-	            //Create New Supplier button and set action listener   
-	            JButton editButton = new JButton("View Supplier");    
-	            editButton.setActionCommand(supplierViewScreenAccess);    
-	            editButton.addActionListener(new ActionListener(){  
+	            //Create View Supplier button and set action listener   
+	            JButton viewButton = new JButton("View Supplier");    
+	            viewButton.setActionCommand(supplierViewScreenAccess);    
+	            viewButton.addActionListener(new ActionListener(){  
 	                @Override
-	                public void actionPerformed(ActionEvent e) { 
-//	                    GUI_SupplierViewScreen supplierViewScreen = new GUI_SupplierViewScreen(); 
-//	                    supplierViewScreen.supplierViewScreen(); 
-//	                      
-//	                    CardLayout cl = (CardLayout)(NewUI.gui.getLayout()); 
-//	                    cl.show(NewUI.gui, e.getActionCommand()); 
+	                public void actionPerformed(ActionEvent e) {
+
+	                	if (check.isASupplier(NewUI.selectedSupplierID,
+	                			NewUI.db.getSuppliers())){
+
+		                    GUI_SupplierViewScreen supplierViewScreen = new GUI_SupplierViewScreen(); 
+		                    supplierViewScreen.supplierViewScreen(); 
+		                      
+		                    CardLayout cl = (CardLayout)(NewUI.gui.getLayout()); 
+		                    cl.show(NewUI.gui, e.getActionCommand()); 
+	                	}
+
 	                }  
 	            });            
-	            buttonPanel.add(editButton); 
+	            buttonPanel.add(viewButton); 
+	            
+	            if (NewUI.currentUser.isAdmin()){
+		            //Create New Supplier button and set action listener   
+		            JButton createButton = new JButton("Add New Supplier");    
+		            createButton.setActionCommand(supplierCreateScreenAccess);    
+		            createButton.addActionListener(new ActionListener(){  
+		                @Override
+		                public void actionPerformed(ActionEvent e) { 
+		                    GUI_SupplierCreateScreen supplierCreateScreen = new GUI_SupplierCreateScreen(); 
+		                    supplierCreateScreen.supplierCreateScreen(); 
+		                      
+		                    CardLayout cl = (CardLayout)(NewUI.gui.getLayout()); 
+		                    cl.show(NewUI.gui, e.getActionCommand()); 
+		                }  
+		            });            
+		            buttonPanel.add(createButton); 
+	            }
 	                
-	            //Create New Supplier button and set action listener   
-	            JButton createButton = new JButton("Add New Supplier");    
-	            createButton.setActionCommand(supplierCreateScreenAccess);    
-	            createButton.addActionListener(new ActionListener(){  
-	                @Override
-	                public void actionPerformed(ActionEvent e) { 
-	                    GUI_SupplierCreateScreen supplierCreateScreen = new GUI_SupplierCreateScreen(); 
-	                    supplierCreateScreen.supplierCreateScreen(); 
-	                      
-	                    CardLayout cl = (CardLayout)(NewUI.gui.getLayout()); 
-	                    cl.show(NewUI.gui, e.getActionCommand()); 
-	                }  
-	            });            
-	            buttonPanel.add(createButton);     
+    
 	          
 	            //Set inner panel content  
 	            topJP.add(titlelbl);  

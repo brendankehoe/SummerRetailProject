@@ -1,4 +1,4 @@
-package Sprint2_Day3;
+package Sprint2_Day6;
 
 import java.awt.BorderLayout; 
 import java.awt.CardLayout;
@@ -13,6 +13,11 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Vector; 
   
+
+
+
+
+
 import javax.swing.BorderFactory; 
 import javax.swing.BoxLayout;
 import javax.swing.JButton; 
@@ -29,20 +34,18 @@ public class GUI_ProductViewScreen {
     public void productViewScreen(){ 
 // HEADER 
         // Create screen panel that is used to replace the gui panel from MainUI.class 
-        JPanel screen = new JPanel(new BorderLayout());  
-        screen.setLayout(new BorderLayout());  
+        JPanel screen = new JPanel(new BorderLayout()); 
         screen.setOpaque(true);  //content panes must be opaque  
           
         // Creates three panels used for the top portion, bottom portion and button portion of the screen 
-        JPanel topJP = new JPanel();   
-        topJP.setBorder(BorderFactory.createLineBorder(Color.RED));   
-        JPanel botJP =  new JPanel(new BorderLayout());   
-        botJP.setBorder(BorderFactory.createLineBorder(Color.blue));   
+        JPanel topJP = new JPanel();     
+        topJP.setBackground(NewUI.topBannerColor);
+        JPanel botJP =  new JPanel(new BorderLayout());      
         JPanel buttonPanel = new JPanel(new FlowLayout());  
-  
+
         // Create the title of the screen in the top panel 
-        JLabel titlelbl = new JLabel("View Product" , JLabel.CENTER);   
-        titlelbl.setFont(new Font("Arial",2 , 48));   
+        JLabel titlelbl = new JLabel("View Product", JLabel.CENTER);   
+        titlelbl.setFont(NewUI.topBannerFont);   
         topJP.add(titlelbl); 
 // HEADER        
   
@@ -55,7 +58,7 @@ public class GUI_ProductViewScreen {
         //Need to initiate product as it is not defined until inside a loop
         Product product = new Product(0,"",0,0.0,0.0, new Supplier(0,"","",""));
         
-        //Retrieving the correct customer from the selectedCustomerID from the table. 
+        //Retrieving the correct product from the selectedProductID from the table. 
         for (Product p : NewUI.db.getProducts()){
       	  if (NewUI.selectedProductID == p.getSku()){
       		  product=p;
@@ -66,7 +69,7 @@ public class GUI_ProductViewScreen {
         JPanel editProductForm = new JPanel(new GridBagLayout());
         GridBagConstraints constraint = new GridBagConstraints();
     
-        JLabel SupplierLabel = new JLabel("Supplier: ");
+        JLabel SupplierLabel = new JLabel("Supplier: ", JLabel.TRAILING);
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.weightx = 0.5;
         constraint.gridx = 0;
@@ -85,128 +88,127 @@ public class GUI_ProductViewScreen {
             }  
         }  
 
-
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
         constraint.gridx = 1;
         constraint.gridy = 0;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.WEST;
-        editProductForm.add(supplierCombo,constraint);  
+       
+        //If current logged-in user is not admin, hide combo box, replace with textfield
+        if (NewUI.currentUser.isAdmin()){
+            editProductForm.add(supplierCombo,constraint); 
+        }
+        else {
+        	JTextField supplierText = new JTextField();
+            for (Supplier s : NewUI.db.getSuppliers()) {   
+                if (s.getId() == product.getSupplier().getId()) {  
+                	supplierText.setText(s.getName());//.setSelectedIndex(supplierCount);  
+                    break;
+                }  
+            } 
+            supplierText.setEditable(false);
+        	editProductForm.add(supplierText,constraint); 
+        }
+  
     
-        JLabel nameLabel = new JLabel("Name:");
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
+        JLabel nameLabel = new JLabel("Name: ", JLabel.TRAILING);
         constraint.gridx = 0;
         constraint.gridy = 1;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.EAST;
         editProductForm.add(nameLabel,constraint);  
     
         final JTextField nameText = new JTextField();
         nameText.setText(product.getName());
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
         constraint.gridx = 1;
         constraint.gridy = 1;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.WEST;
         editProductForm.add(nameText,constraint);  
     
-        JLabel wholesaleLabel = new JLabel("Wholesale Price:  €");
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
+        JLabel wholesaleLabel = new JLabel("Wholesale Price:  €", JLabel.TRAILING);
         constraint.gridx = 0;
         constraint.gridy = 2;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.EAST;
         editProductForm.add(wholesaleLabel,constraint);  
     
         final JTextField wholesaleText = new JTextField();  
         wholesaleText.setText(Double.toString(product.getWholesalePrice()));
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
         constraint.gridx = 1;
         constraint.gridy = 2;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.WEST;
         editProductForm.add(wholesaleText,constraint);  
     
-        JLabel retailLabel = new JLabel("Retail Price:  €");
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
+        JLabel retailLabel = new JLabel("Retail Price:  €", JLabel.TRAILING);
         constraint.gridx = 0;
         constraint.gridy = 3;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.EAST;
         editProductForm.add(retailLabel,constraint);  
     
         final JTextField retailText = new JTextField();
         retailText.setText(Double.toString(product.getRetailPrice()));
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
         constraint.gridx = 1;
         constraint.gridy = 3;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.WEST;
         editProductForm.add(retailText,constraint);  
     
-        JLabel quantityLabel = new JLabel("Stock quantity");
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
+        JLabel quantityLabel = new JLabel("Stock quantity", JLabel.TRAILING);
         constraint.gridx = 0;
         constraint.gridy = 4;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.EAST;
         editProductForm.add(quantityLabel,constraint);  
     
         final JTextField quantityText = new JTextField();
         quantityText.setText(Integer.toString(product.getQuantity()));
         quantityText.setEditable(false);
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
         constraint.gridx = 1;
         constraint.gridy = 4;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.WEST;
         editProductForm.add(quantityText,constraint);  
     
         
+        //If current logged-in user is not admin, set fields non-editable
+        if (!NewUI.currentUser.isAdmin()){
+        	nameText.setEditable(false);
+        	wholesaleText.setEditable(false);
+        	retailText.setEditable(false);
+        }
+        
         // Edit button  
-        JButton productViewEditButton = new JButton("Edit");  
-        productViewEditButton.setActionCommand(productScreenAccess);  
-        productViewEditButton.addActionListener(new ActionListener() {  
-            // Create product from fields
-            public void actionPerformed(ActionEvent e) {
-            	for (Product p : NewUI.db.getProducts()){
-            		if (NewUI.selectedProductID == p.getSku()){
-            			if (NewUI.check.isNotBlank(nameText.getText()) && NewUI.check.isPositiveNumeric(wholesaleText.getText())    
-    		             && NewUI.check.isPositiveNumeric(retailText.getText())){
-            				Supplier supplier = NewUI.db.getSuppliers().get(supplierCombo.getSelectedIndex());
-            				p.setSupplier(supplier);
-            				p.setName(nameText.getText());
-            				p.setWholesalePrice(Double.parseDouble(wholesaleText.getText()));
-							p.setRetailPrice(Double.parseDouble(retailText.getText()));
-							p.setQuantity(Integer.parseInt(quantityText.getText()));
-						  	NewUI.currentActiveScreen=e.getActionCommand();
-						  	GUI_ProductScreen productScreen = new GUI_ProductScreen();
-						  	productScreen.productScreen(); 
-						  	NewUI.selectedCustomerID=0;
-						  	CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
-						  	cl.show(NewUI.gui, NewUI.currentActiveScreen); 
-							break;
-            			}
-            		}
-            	}
-            } 
-        }); 
-        constraint.fill = GridBagConstraints.HORIZONTAL;
-        constraint.weightx = 0.5;
+        //If current logged-in user is not admin, hide edit product
+        if (NewUI.currentUser.isAdmin()){
+        	JButton productViewEditButton = new JButton("Edit");  
+        	productViewEditButton.setActionCommand(productScreenAccess);  
+        	productViewEditButton.addActionListener(new ActionListener() {  
+        		// Create product from fields
+        		public void actionPerformed(ActionEvent e) {
+        			for (Product p : NewUI.db.getProducts()){
+        				if (NewUI.selectedProductID == p.getSku()){
+        					if (NewUI.check.isNotBlank(nameText.getText()) && NewUI.check.isPositiveNumeric(wholesaleText.getText())    
+        							&& NewUI.check.isPositiveNumeric(retailText.getText())){
+        						System.out.println(3);
+        						Supplier supplier = NewUI.db.getSuppliers().get(supplierCombo.getSelectedIndex());
+        						p.setSupplier(supplier);
+        						p.setName(nameText.getText());
+        						p.setWholesalePrice(Double.parseDouble(wholesaleText.getText()));
+        						p.setRetailPrice(Double.parseDouble(retailText.getText()));
+        						p.setQuantity(Integer.parseInt(quantityText.getText()));
+        						NewUI.db.updateSupplierProducts(p.getSupplier());
+        						
+        						NewUI.currentActiveScreen=e.getActionCommand();
+        						GUI_ProductScreen productScreen = new GUI_ProductScreen();
+        						productScreen.productScreen(); 
+        						NewUI.selectedCustomerID=0;
+        						CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
+        						cl.show(NewUI.gui, NewUI.currentActiveScreen); 
+        						break;
+        					}
+        				}
+        			}
+        		} 
+        	}); 
+
         constraint.gridx = 2;
         constraint.gridy = 4;
-        constraint.insets = new Insets(10, 5, 10, 10);
         constraint.anchor = GridBagConstraints.EAST;
         editProductForm.add(productViewEditButton,constraint);
+        }
         
 
         JButton productEditBackButton = new JButton("Back");   
@@ -226,32 +228,36 @@ public class GUI_ProductViewScreen {
         });    
         buttonPanel.add(productEditBackButton);  
         // productEditBackButton.setSize(width, height)  
-    
-    
+
+
         // Delete button
-        JButton productViewDeleteButton = new JButton("Delete Product");
-        productViewDeleteButton.setActionCommand(productScreenAccess);
-        productViewDeleteButton.addActionListener(new ActionListener(){ 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	for (Product p : NewUI.db.getProducts()){
-					if (NewUI.selectedProductID==p.getSku()){
-						NewUI.db.getProducts().remove(p);
-						NewUI.currentActiveScreen=e.getActionCommand();
-					                       
-						NewUI.selectedProductID=0;
-					 
-						GUI_ProductScreen productScreen = new GUI_ProductScreen();
-						productScreen.productScreen();
-						CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
-						cl.show(NewUI.gui, e.getActionCommand()); 
-					 
-						break;	
-					}
-            	}
-            } 
-        });
-        buttonPanel.add(productViewDeleteButton);  
+        //If current logged-in user is not admin, hide delete product
+        if (NewUI.currentUser.isAdmin()){
+        	JButton productViewDeleteButton = new JButton("Delete");
+        	productViewDeleteButton.setActionCommand(productScreenAccess);
+        	productViewDeleteButton.addActionListener(new ActionListener(){ 
+        		@Override
+        		public void actionPerformed(ActionEvent e) {
+        			for (Product p : NewUI.db.getProducts()){
+        				if (NewUI.selectedProductID==p.getSku()){
+        					NewUI.db.getProducts().remove(p);
+        					NewUI.currentActiveScreen=e.getActionCommand();
+        					 NewUI.db.updateSupplierProducts(p.getSupplier());  
+
+        					NewUI.selectedProductID=0;
+
+        					GUI_ProductScreen productScreen = new GUI_ProductScreen();
+        					productScreen.productScreen();
+        					CardLayout cl = (CardLayout)(NewUI.gui.getLayout());       
+        					cl.show(NewUI.gui, e.getActionCommand()); 
+
+        					break;	
+        				}
+        			}
+        		} 
+        	});
+        	buttonPanel.add(productViewDeleteButton); 
+        }
 
         
         JPanel boxPanel = new JPanel();

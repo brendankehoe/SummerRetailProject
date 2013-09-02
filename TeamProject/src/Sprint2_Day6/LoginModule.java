@@ -1,4 +1,4 @@
-package Sprint2_Day3;
+package Sprint2_Day6;
 /** 
 * Login / Access Control Class for Retail Management System
 * 
@@ -20,8 +20,11 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList; 
   
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton; 
 import javax.swing.JFrame; 
@@ -129,9 +132,8 @@ public  class LoginModule extends JFrame {
         }
         
         
-        if(loginUserName.equals("")){ 
-           
-            JOptionPane.showMessageDialog(loginButton, "Please enter a User Name"); 
+        if(loginUserName.equals("")){            
+            JOptionPane.showMessageDialog(loginButton, "Please enter a User Name");
         } 
         else if(!existingUserNames.contains(loginUserName)){
         	JOptionPane.showMessageDialog(loginButton, "User Name entered is not a valid user name");
@@ -146,8 +148,7 @@ public  class LoginModule extends JFrame {
         else if (loginUserName.equals(currentUser.getUserName())&& currentUser.isActive() == false ) {   
         	JOptionPane.showMessageDialog(loginButton, "Account is Not Active"); 
         } 
-        else if (loginUserName.equals(currentUser.getUserName()) && loginUserPassword.equals(currentUser.getPassword()) && currentUser.isActive() == true ) {   
-        	isAdmin = currentUser.isAdmin();   
+        else if (loginUserName.equals(currentUser.getUserName()) && loginUserPassword.equals(currentUser.getPassword()) && currentUser.isActive() == true ) {    
         	NewUI ui = new NewUI(currentUser);
         	loginframe.dispose();
 
@@ -174,10 +175,20 @@ public  class LoginModule extends JFrame {
   
            
         passwordText.setBounds(100, 40, 160, 25); 
+        passwordText.addKeyListener(new KeyListener(){
+        	  public void keyPressed(KeyEvent e){ }
+        	  public void keyReleased(KeyEvent e) {	
+        		  if (e.getKeyCode()==10){
+        	        	authenticateUser();
+        		  }
+        	  }
+        	  public void keyTyped(KeyEvent e) { }
+          });
         frame.add(passwordText); 
   
           
-        loginButton.setBounds(10, 80, 80, 25); 
+        loginButton.setBounds(10, 80, 80, 25);
+
         frame.add(loginButton); 
   
           
