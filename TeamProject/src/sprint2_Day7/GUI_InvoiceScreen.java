@@ -1,4 +1,4 @@
-package Sprint2_Day6;
+package sprint2_Day7;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -69,12 +69,29 @@ public class GUI_InvoiceScreen {
 		final JTable invoicesTable = new JTable();
 
 		invoicesTable.setModel(dtm);
-		// Get the selected customer ID from when the table is clicked
+		// Get the selected invoice ID from the table when it is clicked
 		invoicesTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				NewUI.selectedInvoiceID = Integer.parseInt(invoicesTable
 						.getValueAt(invoicesTable.getSelectedRow(), 0)
 						.toString());
+			}
+		});
+		
+ 		// double click to get more information
+		invoicesTable.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					NewUI.selectedInvoiceID = Integer.parseInt( invoicesTable
+							.getValueAt( invoicesTable.getSelectedRow(), 0 )
+							.toString() );
+
+					GUI_InvoiceViewScreen gui_InvoiceViewScreen = new GUI_InvoiceViewScreen();
+					gui_InvoiceViewScreen.invoiceViewScreen();
+
+					CardLayout cl = (CardLayout) (NewUI.gui.getLayout());
+					cl.show(NewUI.gui, "invoiceView");
+				}
 			}
 		});
 
@@ -101,13 +118,12 @@ public class GUI_InvoiceScreen {
 		invoiceViewButton.setActionCommand(invoiceViewScreenAccess);
 		invoiceViewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Edit button checks to see if a customer is selected
-				if (NewUI.check.isAInvoice(NewUI.selectedInvoiceID,
-						NewUI.db.getInvoices())) {
+				// View button checks to see if an invoice is selected
+				if (NewUI.check.isAnInvoice(NewUI.selectedInvoiceID)) {
 					NewUI.currentActiveScreen = e.getActionCommand();
 
-					GUI_InvoiceViewScreen invoiceViewScreen = new GUI_InvoiceViewScreen();
-					invoiceViewScreen.invoiceViewScreen();
+					GUI_InvoiceViewScreen invoiceViewScreen1 = new GUI_InvoiceViewScreen();
+					invoiceViewScreen1.invoiceViewScreen();
 
 					CardLayout cl = (CardLayout) (NewUI.gui.getLayout());
 					cl.show(NewUI.gui, e.getActionCommand());
