@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="Sprint2_Day3/|Sprint2_Day6/" kind="src" path="src">
+	<classpathentry excluding="Sprint2_Day3/|Sprint2_Day6/|sprint2_Day7/" kind="src" path="src">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="H:/Team Project/ext_libraries"/>
 		</attributes>
