@@ -4,11 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -72,6 +79,8 @@ public class NewUI {
 			e1.printStackTrace();
 		}
       	
+		ImageIcon imageIcon = new ImageIcon("resources/beer icon.gif");
+    	mainFrame.setIconImage(imageIcon.getImage());
     	
     	//Set the user from Login 
         currentUser = user; 
@@ -84,8 +93,7 @@ public class NewUI {
     	}
   
     	mainFrame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);   
-    	mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
-    	mainFrame.setResizable(false); 
+    	mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
         // Create the menu bar   
         mainFrame.setJMenuBar(new MenuBarUI().getMenubar());   
